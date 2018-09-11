@@ -1,4 +1,4 @@
-# matrixprofile
+# matrixprofile-ts
 ## What is matrixprofile?
 matrixprofile is a Python library for evaluating time series data using the matrix profile algorithms developed by the Keough and Mueen research groups at the University of California-Riverside and the University of New Mexico. Current algorithms implemented include MASS, STMP, STAMP and STAMPI.
 
