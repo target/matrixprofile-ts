@@ -3,9 +3,7 @@
 matrixprofile is a Python library for evaluating time series data using the matrix profile algorithms developed by the Keough and Mueen research groups at the University of California-Riverside and the University of New Mexico. Current algorithms implemented include MASS, STMP, STAMP and STAMPI.
 
 ## Getting Started
-### Setting Up
-The easiest way to install matrixprofile is through pip:  
-`$ pip install matrixprofile`  
+  
 
 ### Tutorial
 This repo includes a Jupyter Notebook tutorial containing basic examples of the code. This notebook also renders automatically in GitHub. 
