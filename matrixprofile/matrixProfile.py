@@ -1,7 +1,7 @@
+from . import distanceProfile
+from . import order
+from .utils import mass
 import numpy as np
-import distanceProfile
-import order
-from utils import mass
 
 def _matrixProfile(tsA,m,orderClass,distanceProfileFunction,tsB=None):
     order = orderClass(len(tsA)-m+1)
