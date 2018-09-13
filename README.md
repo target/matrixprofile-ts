@@ -16,7 +16,5 @@ This repo includes a Jupyter Notebook tutorial containing basic examples of the 
 
 
 
-
-This **matrixprofile** library is based on:
-
+### Citations
 Chin-Chia Michael Yeh, Yan Zhu, Liudmila Ulanova, Nurjahan Begum, Yifei Ding, Hoang Anh Dau, Diego Furtado Silva, Abdullah Mueen, Eamonn Keogh (2016). Matrix Profile I: All Pairs Similarity Joins for Time Series: A Unifying View that Includes Motifs, Discords and Shapelets. IEEE ICDM 2016. (http://www.cs.ucr.edu/~eamonn/MatrixProfile.html)
