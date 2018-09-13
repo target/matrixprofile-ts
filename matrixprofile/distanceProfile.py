@@ -1,5 +1,5 @@
+from .utils import *
 import numpy as np
-from utils import *
 
 def naiveDistanceProfile(tsA,idx,m,tsB = None):
     '''Return the distance profile of a query within tsA against the time series tsB. Uses the naive all-pairs comparison. idx defines the starting index of the query within tsA and m is the length of the query.'''
@@ -8,6 +8,8 @@ def naiveDistanceProfile(tsA,idx,m,tsB = None):
     if tsB is None:
         selfJoin = True
         tsB = tsA
+
+    print('it works')
 
     query = tsA[idx: (idx+m)]
     distanceProfile = []
