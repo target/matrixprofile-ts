@@ -15,7 +15,7 @@ matrixprofile-ts is available on pip:
 This repo includes a Jupyter Notebook tutorial containing basic examples of the code (see the docs folder). This notebook also renders automatically in GitHub. 
 
 
-*Note: This matrixprofile implementation uses Python 3*
+
 
 This **matrixprofile** library is based on:
 
