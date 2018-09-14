@@ -1,3 +1,4 @@
+[![PyPI version](https://badge.fury.io/py/matrixprofile-ts.svg)](https://badge.fury.io/py/matrixprofile-ts)
 # matrixprofile-ts
 
 ## What is it?
@@ -9,10 +10,10 @@ matrixprofile-ts is a Python 3 library for evaluating time series data using the
 matrixprofile-ts is available on pip:
 
 `pip install matrixprofile-ts`
-  
+
 
 ### Tutorial
-This repo includes a Jupyter Notebook tutorial containing basic examples of the code (see the docs folder). This notebook also renders automatically in GitHub. 
+This repo includes a Jupyter Notebook tutorial containing basic examples of the code (see the docs folder). This notebook also renders automatically in GitHub.
 
 
 
