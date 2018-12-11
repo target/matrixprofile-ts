@@ -1,4 +1,4 @@
-from .utils import *
+from utils import *
 import numpy as np
 import pytest
 
@@ -60,8 +60,6 @@ class TestClass(object):
 
         outcome = np.array([14.,20.,26.])
 
-        print(slidingDotProduct(a,b))
-
         assert np.allclose(slidingDotProduct(a,b), outcome)
 
     def test_mass(self):
@@ -71,3 +69,20 @@ class TestClass(object):
         outcome = np.array([0.0])
 
         assert np.allclose(mass(a,b), outcome)
+
+
+    def test_apply_av(self):
+        a = [np.array([1.0,2.0,1.0,2.0]),np.array([0.0,0.0,0.0,0.0])]
+        av = np.array([2.0,1.0,2.0,1.0])
+
+        outcome = np.array([2.0,2.0,2.0,2.0])
+
+        assert np.allclose(apply_av(a,av), outcome)
+
+
+    def test_apply_av_length_error(self):
+        a = [np.array([1.0,2.0,1.0,2.0]),np.array([0.0,0.0,0.0,0.0])]
+        av = np.array([2.0,1.0,2.0])
+
+        with pytest.raises(ValueError):
+            apply_av(a,av)

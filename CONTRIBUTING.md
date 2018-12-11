@@ -1,19 +1,19 @@
 # Contributing to matrixprofile
 
 ## Issues
-Please, raise issues in GitHub to help keep matrixprofile updated!
+Please, raise issues in GitHub to help keep matrixprofile-ts updated!
 
 ## How to contribute to matrixprofile
   1. Fork matrixprofile
   2. Start a new branch for your feature
     * branch prefixes we use:
-      * `feature/`: for features
-      * `fix/`: something broke and we need to fix it now
+      * `feature_{}`: for features
+      * `fix_{}`: something broke and we need to fix it now
   3. Open and submit your Pull Request! A dialog will begin and thank you for your contributions.
 
 ## Guidelines
   1. Be Respectful
-     * We appreciate contributions to matrixprofile and we ask you to respect
+     * We appreciate contributions to matrixprofile-ts and we ask you to respect
     one another.
   2. Be Responsible
      * You are responsible for your Pull Request submission
