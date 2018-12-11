@@ -83,14 +83,13 @@ def mass(query,ts):
     return np.sqrt(2*(m-(dot/std)))
 
 
-def apply_av(mp,method='simplicity',av=None):
+def apply_av(mp,av=[1.0]):
     """Applies annotation vector 'av' to the original matrix profile and matrix profile index contained in tuple mp, and returns the corrected MP/MPI as a new tuple"""
 
-    if method == 'simplicity':
-        #Apply normalization with respect to standard deviation of subsequences
+    if len(mp[0]) != len(av):
+        raise ValueError("Annotation Vector must be the same length as the matrix profile")
 
-    elif method == 'manual':
-        #Load specified annotation vector and apply to matrix Profile
+    else:
+        mp_corrected = mp[0]*np.array(av)
 
-
-    #Return CMP and CMPi
+        return mp_corrected
