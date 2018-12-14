@@ -1,4 +1,4 @@
-from .matrixprofile.matrixProfile import *
+from matrixprofile.matrixProfile import *
 import numpy as np
 import pytest
 

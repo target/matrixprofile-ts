@@ -1,4 +1,4 @@
-from .matrixprofile.order import *
+from matrixprofile.order import *
 import numpy as np
 import pytest
 
