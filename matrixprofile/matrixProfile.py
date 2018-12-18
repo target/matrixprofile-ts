@@ -51,7 +51,7 @@ def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sa
 
     iter = 0
 
-    while iter <= iters:
+    while iter < iters:
         (distanceProfile,querySegmentsID) = distanceProfileFunction(tsA,idx,m,tsB)
 
         #Check which of the indices have found a new minimum
