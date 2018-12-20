@@ -1,4 +1,4 @@
-from utils import *
+from matrixprofile.utils import *
 import numpy as np
 import pytest
 

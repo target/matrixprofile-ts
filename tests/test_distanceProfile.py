@@ -1,4 +1,4 @@
-from distanceProfile import *
+from matrixprofile.distanceProfile import *
 import numpy as np
 import pytest
 

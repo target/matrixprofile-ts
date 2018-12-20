@@ -1,4 +1,4 @@
-from matrixProfile import *
+from matrixprofile.matrixProfile import *
 import numpy as np
 import pytest
 
@@ -86,7 +86,7 @@ class TestClass(object):
         mp_outcome = np.array([0., 0., 0., 0., 0., 0., 0., 0., 0.])
 
 
-        r = stamp(a,4)
+        r = stamp(a,4, sampling=1.0)
 
         assert(r[0] == mp_outcome).all()
 
@@ -123,7 +123,7 @@ class TestClass(object):
 
     def test_stampi_mp(self):
         a = np.array([0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,1.0])
-        r = stamp(a,4)
+        r = stamp(a,4, sampling=1.0)
         final = np.round(stampi_update(a,4,r[0],r[1],95),2)
 
         mp_outcome = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.83])
@@ -133,7 +133,7 @@ class TestClass(object):
 
     def test_stampi_mpi(self):
         a = np.array([0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,1.0])
-        r = stamp(a,4)
+        r = stamp(a,4, sampling=1.0)
         final = np.round(stampi_update(a,4,r[0],r[1],95),2)
 
         mpi_outcome = np.array([4.0, 5.0, 6.0, 7.0, 0.0, 1.0, 2.0, 3.0, 3.0])
