@@ -67,6 +67,38 @@ def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sa
         iter += 1
     return (mp,mpIndex)
 
+
+#Write matrix profile function for STOMP and then consolidate later! (aka link to the previous distance profile)
+def _matrixProfile_stomp(tsA,m,orderClass=,distanceProfileFunction,tsB=None):
+    order = orderClass(len(tsA)-m+1)
+
+    #Account for the case where tsB is None (note that tsB = None triggers a self matrix profile)
+    if tsB is None:
+        mp = np.full(len(tsA)-m+1,np.inf)
+        mpIndex = np.full(len(tsA)-m+1,np.inf)
+
+    else:
+        mp = np.full(len(tsB)-m+1,np.inf)
+        mpIndex = np.full(len(tsB)-m+1,np.inf)
+
+    idx=order.next()
+
+    while idx != None:
+        (distanceProfile,querySegmentsID) = distanceProfileFunction(tsA,idx,m,tsB)
+
+        #Check which of the indices have found a new minimum
+        idsToUpdate = distanceProfile < mp
+
+        #Update the Matrix Profile Index to indicate that the current index is the minimum location for the aforementioned indices
+        mpIndex[idsToUpdate] = querySegmentsID[idsToUpdate]
+
+        #Update the matrix profile to include the new minimum values (where appropriate)
+        mp = np.minimum(mp,distanceProfile)
+        idx = order.next()
+
+        iter += 1
+    return (mp,mpIndex)
+
 def stampi_update(tsA,m,mp,mpIndex,newval,tsB=None,distanceProfileFunction=distanceProfile.massDistanceProfile):
     '''Updates the self-matched matrix profile for a time series TsA with the arrival of a new data point newval. Note that comparison of two separate time-series with new data arriving will be built later -> currently, tsB should be set to tsA'''
 
@@ -106,6 +138,9 @@ def stmp(tsA,m,tsB=None):
 
 def stamp(tsA,m,tsB=None,sampling=0.2):
     return _matrixProfile_sampling(tsA,m,order.randomOrder,distanceProfile.massDistanceProfile,tsB,sampling=sampling)
+
+def stomp(tsA,m,tsB=None):
+    return _matrixProfile_stomp()
 
 
 

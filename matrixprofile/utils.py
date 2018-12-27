@@ -71,6 +71,17 @@ def slidingDotProduct(query,ts):
     #Note that we only care about the dot product results from index m-1 onwards, as the first few values aren't true dot products (due to the way the FFT works for dot products)
     return dot_product[trim :]
 
+def DotProductStomp(query,ts,dot_first,dot_prev,order):
+
+    #This should probably be vectorized...
+    dot = np.zeros(l)
+    m = len(query)
+    l = len(ts)-len(query)+1
+    for i in reverse(range(l,1,-1)):
+        dot[l-1] = dot_prev[l-2]-ts[order-1]*ts[i-1]+ts[order+m-1]*ts[i+m-1]
+
+    return dot        
+
 def mass(query,ts):
     """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries. MASS is a Euclidian distance similarity search algorithm. Note that Z-normalization of the query changes mu(query) to 0 and sigma(query) to 1, which greatly simplifies the MASS formula described in Yeh et.al"""
 

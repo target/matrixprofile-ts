@@ -47,6 +47,26 @@ def massDistanceProfile(tsA,idx,m,tsB = None):
     #Both the distance profile and corresponding matrix profile index (which should just have the current index)
     return (distanceProfile,np.full(n-m+1,idx,dtype=float))
 
+
+def massSTOMPDistanceProfile(tsA,idx,m,tsB = None):
+    '''Return the distance profile of a query within tsA against the time series tsB. Uses the more efficient MASS comparison. idx defines the starting index of the query within tsA and m is the length of the query.'''
+
+
+    selfJoin = False
+    if tsB is None:
+        selfJoin = True
+        tsB = tsA
+
+    query = tsA[idx:(idx+m)]
+    n = len(tsB)
+    distanceProfile = mass(query,tsB)
+    if selfJoin:
+        trivialMatchRange = (int(max(0,idx - np.round(m/2,0))),int(min(idx + np.round(m/2+1,0),n)))
+        distanceProfile[trivialMatchRange[0]:trivialMatchRange[1]] = np.inf
+
+    #Both the distance profile and corresponding matrix profile index (which should just have the current index)
+    return (distanceProfile,np.full(n-m+1,idx,dtype=float))
+
 if __name__ == "__main__":
     import doctest
     doctest.method()
