@@ -95,17 +95,17 @@ def DotProductStomp(ts,m,dot_first,dot_prev,order):
     #This should probably be vectorized...
     #m = len(query)
     l = len(ts)-m+1
-    print(m)
-    print(l)
-    print(order)
     dot = np.zeros(l)
     for i in range(l-1,0,-1):
-        print(i)
+        #print(i)
         dot[i] = dot_prev[i-1]-ts[order-1]*ts[i-1]+ts[order+m-1]*ts[i+m-1]
+
+    #Update the first value in the dot product array
+    dot[0] = dot_first[order]
 
     return dot
 
-def mass(query,ts):
+def mass_old(query,ts):
     """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries. MASS is a Euclidian distance similarity search algorithm. Note that Z-normalization of the query changes mu(query) to 0 and sigma(query) to 1, which greatly simplifies the MASS formula described in Yeh et.al"""
 
     query_normalized = zNormalize(np.copy(query))
@@ -116,17 +116,28 @@ def mass(query,ts):
 
     return np.sqrt(2*(m-(dot/std)))
 
+def mass(query,ts):
+    """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries. MASS is a Euclidian distance similarity search algorithm. Note that Z-normalization of the query changes mu(query) to 0 and sigma(query) to 1, which greatly simplifies the MASS formula described in Yeh et.al"""
+
+    #query_normalized = zNormalize(np.copy(query))
+    m = len(query)
+    q_mean = np.mean(query)
+    q_std = np.std(query)
+    mean, std = movmeanstd(ts,m)
+    dot = slidingDotProduct(query,ts)
+
+    return np.sqrt(2*m*(1-(dot-m*mean*q_mean)/(m*std*q_std)))
+
 def massStomp(query,ts,dot_first,dot_prev,index,mean,std):
     """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries using the STOMP dot product speedup."""
     #query??
     #query_normalized = zNormalize(np.copy(query))
     m = len(query)
-    std = movstd(ts,m)
+    #std = movstd(ts,m)
     dot = DotProductStomp(ts,m,dot_first,dot_prev,index)
 
-
     #Return both the MASS calcuation and the dot product
-    return np.sqrt(2*m-(1-(dot*m*mean[index]*mean)/(m*std[index]*std))), dot
+    return np.sqrt(2*m*(1-(dot-m*mean[index]*mean)/(m*std[index]*std))), dot
 
 
 def apply_av(mp,av=[1.0]):
