@@ -25,5 +25,5 @@ Chin-Chia Michael Yeh, Yan Zhu, Liudmila Ulanova, Nurjahan Begum, Yifei Ding, Ho
 
 
 ## Other Matrix Profile libraries
-R: https://github.com/franzbischoff/tsmp
-Golang: https://github.com/aouyang1/go-matrixprofile
+- R: https://github.com/franzbischoff/tsmp
+- Golang: https://github.com/aouyang1/go-matrixprofile
