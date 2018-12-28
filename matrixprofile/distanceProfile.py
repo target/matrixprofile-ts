@@ -46,7 +46,7 @@ def massDistanceProfile(tsA,idx,m,tsB = None):
     return (distanceProfile,np.full(n-m+1,idx,dtype=float))
 
 
-def STOMPDistanceProfile(tsA,idx,m,tsB = None,order=0):
+def STOMPDistanceProfile(tsA,idx,m,tsB,dp,mean,std):
     '''Return the distance profile of a query within tsA against the time series tsB. Uses the more efficient MASS comparison. idx defines the starting index of the query within tsA and m is the length of the query.'''
 
 
@@ -59,12 +59,15 @@ def STOMPDistanceProfile(tsA,idx,m,tsB = None,order=0):
     n = len(tsB)
 
     #Calculate the first distance profile via MASS
-    if order == 0:
+    if idx == 0:
         distanceProfile = mass(query,tsB)
+
+        #Currently re-calculating the dot product separately as opposed to updating all of the mass function...
+        dot = slidingDotProduct(query,tsB)
 
     #Calculate all subsequent distance profiles using the STOMP dot product shortcut
     else:
-        distanceProfile = massStomp(query,ts,dot_first,dot_prev,order)
+        distanceProfile, dot = massStomp(query,tsB,dot_first,dp,idx,mean,std)
 
 
     if selfJoin:
@@ -72,7 +75,7 @@ def STOMPDistanceProfile(tsA,idx,m,tsB = None,order=0):
         distanceProfile[trivialMatchRange[0]:trivialMatchRange[1]] = np.inf
 
     #Both the distance profile and corresponding matrix profile index (which should just have the current index)
-    return (distanceProfile,np.full(n-m+1,idx,dtype=float))
+    return (distanceProfile,np.full(n-m+1,idx,dtype=float)), dot
 
 if __name__ == "__main__":
     import doctest

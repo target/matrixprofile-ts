@@ -63,7 +63,7 @@ def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sa
 
 
 #Write matrix profile function for STOMP and then consolidate later! (aka link to the previous distance profile)
-def _matrixProfile_stomp(tsA,m,orderClass=,distanceProfileFunction,tsB=None):
+def _matrixProfile_stomp(tsA,m,orderClass,distanceProfileFunction,tsB=None):
     order = orderClass(len(tsA)-m+1)
 
     #Account for the case where tsB is None (note that tsB = None triggers a self matrix profile)
@@ -77,10 +77,19 @@ def _matrixProfile_stomp(tsA,m,orderClass=,distanceProfileFunction,tsB=None):
 
     idx=order.next()
 
+    #Get moving mean and standard deviation
+    mean, std = movmeanstd(tsA,m)
+
+    #Initialize code to set dot_prev to None for the first pass
+    dp = None
+
     while idx != None:
 
         #Need to pass in the previous sliding dot product for subsequent distance profile calculations
-        (distanceProfile,querySegmentsID) = distanceProfileFunction(tsA,idx,m,tsB)
+        (distanceProfile,querySegmentsID),dot_prev = distanceProfileFunction(tsA,idx,m,tsB,dp,mean,std)
+
+        if idx == 0:
+            dot_first = dot_prev
 
         #Check which of the indices have found a new minimum
         idsToUpdate = distanceProfile < mp
@@ -92,7 +101,7 @@ def _matrixProfile_stomp(tsA,m,orderClass=,distanceProfileFunction,tsB=None):
         mp = np.minimum(mp,distanceProfile)
         idx = order.next()
 
-        iter += 1
+        dp = dot_prev
     return (mp,mpIndex)
 
 def stampi_update(tsA,m,mp,mpIndex,newval,tsB=None,distanceProfileFunction=distanceProfile.massDistanceProfile):
@@ -136,7 +145,7 @@ def stamp(tsA,m,tsB=None,sampling=0.2):
     return _matrixProfile_sampling(tsA,m,order.randomOrder,distanceProfile.massDistanceProfile,tsB,sampling=sampling)
 
 def stomp(tsA,m,tsB=None):
-    return _matrixProfile_stomp(tsA,m,order.randomOrder,distanceProfile.STOMPDistanceProfile,tsB)
+    return _matrixProfile_stomp(tsA,m,order.linearOrder,distanceProfile.STOMPDistanceProfile,tsB)
 
 
 

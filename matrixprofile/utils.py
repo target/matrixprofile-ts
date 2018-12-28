@@ -97,7 +97,7 @@ def mass(query,ts):
 
     return np.sqrt(2*(m-(dot/std)))
 
-def massStomp(query,ts,dot_first,dot_prev,order):
+def massStomp(query,ts,dot_first,dot_prev,index,mean,std):
     """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries using the STOMP dot product speedup."""
     #query??
     query_normalized = zNormalize(np.copy(query))
@@ -106,7 +106,8 @@ def massStomp(query,ts,dot_first,dot_prev,order):
     dot = DotProductStomp(ts,dot_first,dot_prev,order)
 
 
-    return np.sqrt(2*(m-(dot/std)))
+    #Return both the MASS calcuation and the dot product
+    return np.sqrt(2*m-(1-(dot*m*mean[index]*mean)/(m*std[index]*std))), dot
 
 
 def apply_av(mp,av=[1.0]):
