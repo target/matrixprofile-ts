@@ -45,13 +45,7 @@ def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sa
         mpIndex = np.full(len(tsB)-m+1,np.inf)
 
     idx=order.next()
-
-    #Define max numbers of iterations to sample
-    iters = (len(tsA)-m+1)*sampling
-
-    iter = 0
-
-    while iter < iters:
+    while idx != None:
         (distanceProfile,querySegmentsID) = distanceProfileFunction(tsA,idx,m,tsB)
 
         #Check which of the indices have found a new minimum
@@ -84,6 +78,8 @@ def _matrixProfile_stomp(tsA,m,orderClass=,distanceProfileFunction,tsB=None):
     idx=order.next()
 
     while idx != None:
+
+        #Need to pass in the previous sliding dot product for subsequent distance profile calculations
         (distanceProfile,querySegmentsID) = distanceProfileFunction(tsA,idx,m,tsB)
 
         #Check which of the indices have found a new minimum
@@ -140,7 +136,7 @@ def stamp(tsA,m,tsB=None,sampling=0.2):
     return _matrixProfile_sampling(tsA,m,order.randomOrder,distanceProfile.massDistanceProfile,tsB,sampling=sampling)
 
 def stomp(tsA,m,tsB=None):
-    return _matrixProfile_stomp()
+    return _matrixProfile_stomp(tsA,m,order.randomOrder,distanceProfile.STOMPDistanceProfile,tsB)
 
 
 

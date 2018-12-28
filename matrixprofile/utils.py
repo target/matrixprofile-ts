@@ -22,8 +22,8 @@ def zNormalizeEuclidian(tsA,tsB):
 
     return np.linalg.norm(zNormalize(tsA.astype("float64")) - zNormalize(tsB.astype("float64")))
 
-def movstd(ts,m):
-    """Calculate the standard deviation within a moving window of width m passing across the time series ts"""
+def movmeanstd(ts,m):
+    """Calculate the mean and standard deviation within a moving window of width m passing across the time series ts"""
     if m <= 1:
         raise ValueError("Query length must be longer than one")
 
@@ -35,7 +35,10 @@ def movstd(ts,m):
     segSum = s[m:] - s[:-m]
     segSumSq = sSq[m:] -sSq[:-m]
 
-    return np.sqrt(segSumSq / m - (segSum/m) ** 2)
+    movmean = segsum/m
+    movstd = np.sqrt(segSumSq / m - (segSum/m) ** 2)
+
+    return [movmean,movstd]
 
 def slidingDotProduct(query,ts):
     """Calculate the dot product between the query and all subsequences of length(query) in the timeseries ts. Note that we use Numpy's rfft method instead of fft."""
@@ -71,7 +74,8 @@ def slidingDotProduct(query,ts):
     #Note that we only care about the dot product results from index m-1 onwards, as the first few values aren't true dot products (due to the way the FFT works for dot products)
     return dot_product[trim :]
 
-def DotProductStomp(query,ts,dot_first,dot_prev,order):
+def DotProductStomp(ts,dot_first,dot_prev,order):
+    """Updates the sliding dot product for time series ts from the previous dot product dot_prev. QT(1,1) is pulled from the initial dot product as dot_first"""
 
     #This should probably be vectorized...
     dot = np.zeros(l)
@@ -80,7 +84,7 @@ def DotProductStomp(query,ts,dot_first,dot_prev,order):
     for i in reverse(range(l,1,-1)):
         dot[l-1] = dot_prev[l-2]-ts[order-1]*ts[i-1]+ts[order+m-1]*ts[i+m-1]
 
-    return dot        
+    return dot
 
 def mass(query,ts):
     """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries. MASS is a Euclidian distance similarity search algorithm. Note that Z-normalization of the query changes mu(query) to 0 and sigma(query) to 1, which greatly simplifies the MASS formula described in Yeh et.al"""
@@ -89,6 +93,17 @@ def mass(query,ts):
     m = len(query)
     std = movstd(ts,m)
     dot = slidingDotProduct(query_normalized,ts)
+
+
+    return np.sqrt(2*(m-(dot/std)))
+
+def massStomp(query,ts,dot_first,dot_prev,order):
+    """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries using the STOMP dot product speedup."""
+    #query??
+    query_normalized = zNormalize(np.copy(query))
+    m = len(query)
+    std = movstd(ts,m)
+    dot = DotProductStomp(ts,dot_first,dot_prev,order)
 
 
     return np.sqrt(2*(m-(dot/std)))

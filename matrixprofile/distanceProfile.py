@@ -9,8 +9,6 @@ def naiveDistanceProfile(tsA,idx,m,tsB = None):
         selfJoin = True
         tsB = tsA
 
-    print('it works')
-
     query = tsA[idx: (idx+m)]
     distanceProfile = []
     n = len(tsB)
@@ -48,7 +46,7 @@ def massDistanceProfile(tsA,idx,m,tsB = None):
     return (distanceProfile,np.full(n-m+1,idx,dtype=float))
 
 
-def massSTOMPDistanceProfile(tsA,idx,m,tsB = None):
+def STOMPDistanceProfile(tsA,idx,m,tsB = None,order=0):
     '''Return the distance profile of a query within tsA against the time series tsB. Uses the more efficient MASS comparison. idx defines the starting index of the query within tsA and m is the length of the query.'''
 
 
@@ -59,7 +57,16 @@ def massSTOMPDistanceProfile(tsA,idx,m,tsB = None):
 
     query = tsA[idx:(idx+m)]
     n = len(tsB)
-    distanceProfile = mass(query,tsB)
+
+    #Calculate the first distance profile via MASS
+    if order == 0:
+        distanceProfile = mass(query,tsB)
+
+    #Calculate all subsequent distance profiles using the STOMP dot product shortcut
+    else:
+        distanceProfile = massStomp(query,ts,dot_first,dot_prev,order)
+
+
     if selfJoin:
         trivialMatchRange = (int(max(0,idx - np.round(m/2,0))),int(min(idx + np.round(m/2+1,0),n)))
         distanceProfile[trivialMatchRange[0]:trivialMatchRange[1]] = np.inf

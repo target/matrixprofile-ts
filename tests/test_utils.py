@@ -22,7 +22,8 @@ class TestClass(object):
 
         assert np.round(zNormalizeEuclidian(a,b),4) == np.round(2.0*np.sqrt(2.0),4)
 
-    def test_movstd(self):
+    #FINISH THIS TEST!!!
+    def test_movmeanstd(self):
         a = np.array([1.0,2.0,4.0,8.0])
         m = 2
 
