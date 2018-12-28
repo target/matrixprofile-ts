@@ -1,6 +1,6 @@
 from . import distanceProfile
 from . import order
-from .utils import mass
+from .utils import mass, movmeanstd
 import numpy as np
 
 def _matrixProfile(tsA,m,orderClass,distanceProfileFunction,tsB=None):
@@ -83,10 +83,13 @@ def _matrixProfile_stomp(tsA,m,orderClass,distanceProfileFunction,tsB=None):
     #Initialize code to set dot_prev to None for the first pass
     dp = None
 
+    #Initialize dot_first to None for the first pass
+    dot_first = None
+
     while idx != None:
 
         #Need to pass in the previous sliding dot product for subsequent distance profile calculations
-        (distanceProfile,querySegmentsID),dot_prev = distanceProfileFunction(tsA,idx,m,tsB,dp,mean,std)
+        (distanceProfile,querySegmentsID),dot_prev = distanceProfileFunction(tsA,idx,m,tsB,dot_first,dp,mean,std)
 
         if idx == 0:
             dot_first = dot_prev

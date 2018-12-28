@@ -46,7 +46,7 @@ def massDistanceProfile(tsA,idx,m,tsB = None):
     return (distanceProfile,np.full(n-m+1,idx,dtype=float))
 
 
-def STOMPDistanceProfile(tsA,idx,m,tsB,dp,mean,std):
+def STOMPDistanceProfile(tsA,idx,m,tsB,dot_first,dp,mean,std):
     '''Return the distance profile of a query within tsA against the time series tsB. Uses the more efficient MASS comparison. idx defines the starting index of the query within tsA and m is the length of the query.'''
 
 

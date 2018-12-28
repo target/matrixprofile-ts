@@ -35,10 +35,25 @@ def movmeanstd(ts,m):
     segSum = s[m:] - s[:-m]
     segSumSq = sSq[m:] -sSq[:-m]
 
-    movmean = segsum/m
+    movmean = segSum/m
     movstd = np.sqrt(segSumSq / m - (segSum/m) ** 2)
 
     return [movmean,movstd]
+
+def movstd(ts,m):
+    """Calculate the standard deviation within a moving window of width m passing across the time series ts"""
+    if m <= 1:
+        raise ValueError("Query length must be longer than one")
+
+    ts = ts.astype("float")
+    #Add zero to the beginning of the cumsum of ts
+    s = np.insert(np.cumsum(ts),0,0)
+    #Add zero to the beginning of the cumsum of ts ** 2
+    sSq = np.insert(np.cumsum(ts ** 2),0,0)
+    segSum = s[m:] - s[:-m]
+    segSumSq = sSq[m:] -sSq[:-m]
+
+    return np.sqrt(segSumSq / m - (segSum/m) ** 2)
 
 def slidingDotProduct(query,ts):
     """Calculate the dot product between the query and all subsequences of length(query) in the timeseries ts. Note that we use Numpy's rfft method instead of fft."""
@@ -74,15 +89,19 @@ def slidingDotProduct(query,ts):
     #Note that we only care about the dot product results from index m-1 onwards, as the first few values aren't true dot products (due to the way the FFT works for dot products)
     return dot_product[trim :]
 
-def DotProductStomp(ts,dot_first,dot_prev,order):
+def DotProductStomp(ts,m,dot_first,dot_prev,order):
     """Updates the sliding dot product for time series ts from the previous dot product dot_prev. QT(1,1) is pulled from the initial dot product as dot_first"""
 
     #This should probably be vectorized...
+    #m = len(query)
+    l = len(ts)-m+1
+    print(m)
+    print(l)
+    print(order)
     dot = np.zeros(l)
-    m = len(query)
-    l = len(ts)-len(query)+1
-    for i in reverse(range(l,1,-1)):
-        dot[l-1] = dot_prev[l-2]-ts[order-1]*ts[i-1]+ts[order+m-1]*ts[i+m-1]
+    for i in range(l-1,0,-1):
+        print(i)
+        dot[i] = dot_prev[i-1]-ts[order-1]*ts[i-1]+ts[order+m-1]*ts[i+m-1]
 
     return dot
 
@@ -100,10 +119,10 @@ def mass(query,ts):
 def massStomp(query,ts,dot_first,dot_prev,index,mean,std):
     """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries using the STOMP dot product speedup."""
     #query??
-    query_normalized = zNormalize(np.copy(query))
+    #query_normalized = zNormalize(np.copy(query))
     m = len(query)
     std = movstd(ts,m)
-    dot = DotProductStomp(ts,dot_first,dot_prev,order)
+    dot = DotProductStomp(ts,m,dot_first,dot_prev,index)
 
 
     #Return both the MASS calcuation and the dot product
