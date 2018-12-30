@@ -139,3 +139,22 @@ class TestClass(object):
         mpi_outcome = np.array([4.0, 5.0, 6.0, 7.0, 0.0, 1.0, 2.0, 3.0, 3.0])
 
         assert(np.allclose(final[1],mpi_outcome))
+
+
+    def test_stomp_self_mp(self):
+        a = np.array([0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0])
+        mp_outcome = np.array([0., 0., 0., 0., 0., 0., 0., 0., 0.])
+
+
+        r = stomp(a,4)
+
+        assert(r[0] == mp_outcome).all()
+
+
+    def test_stomp_self_mpi(self):
+        a = np.array([0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0])
+        mpi_outcome = np.array([4., 5., 6., 7., 0., 1., 2., 3., 0.])
+
+        r = stomp(a,4)
+
+        assert(r[1] == mpi_outcome).all()

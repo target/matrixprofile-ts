@@ -22,6 +22,24 @@ def zNormalizeEuclidian(tsA,tsB):
 
     return np.linalg.norm(zNormalize(tsA.astype("float64")) - zNormalize(tsB.astype("float64")))
 
+def movmeanstd(ts,m):
+    """Calculate the mean and standard deviation within a moving window of width m passing across the time series ts"""
+    if m <= 1:
+        raise ValueError("Query length must be longer than one")
+
+    ts = ts.astype("float")
+    #Add zero to the beginning of the cumsum of ts
+    s = np.insert(np.cumsum(ts),0,0)
+    #Add zero to the beginning of the cumsum of ts ** 2
+    sSq = np.insert(np.cumsum(ts ** 2),0,0)
+    segSum = s[m:] - s[:-m]
+    segSumSq = sSq[m:] -sSq[:-m]
+
+    movmean = segSum/m
+    movstd = np.sqrt(segSumSq / m - (segSum/m) ** 2)
+
+    return [movmean,movstd]
+
 def movstd(ts,m):
     """Calculate the standard deviation within a moving window of width m passing across the time series ts"""
     if m <= 1:
@@ -71,16 +89,39 @@ def slidingDotProduct(query,ts):
     #Note that we only care about the dot product results from index m-1 onwards, as the first few values aren't true dot products (due to the way the FFT works for dot products)
     return dot_product[trim :]
 
+def DotProductStomp(ts,m,dot_first,dot_prev,order):
+    """Updates the sliding dot product for time series ts from the previous dot product dot_prev. QT(1,1) is pulled from the initial dot product as dot_first"""
+
+    l = len(ts)-m+1
+    dot = np.roll(dot_prev,1)
+
+    dot += ts[order+m-1]*ts[m-1:l+m]-ts[order-1]*np.roll(ts[:l],1)
+
+    #Update the first value in the dot product array
+    dot[0] = dot_first[order]
+
+    return dot
+
+
 def mass(query,ts):
-    """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries. MASS is a Euclidian distance similarity search algorithm. Note that Z-normalization of the query changes mu(query) to 0 and sigma(query) to 1, which greatly simplifies the MASS formula described in Yeh et.al"""
+    """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries. MASS is a Euclidian distance similarity search algorithm."""
 
-    query_normalized = zNormalize(np.copy(query))
+    #query_normalized = zNormalize(np.copy(query))
     m = len(query)
-    std = movstd(ts,m)
-    dot = slidingDotProduct(query_normalized,ts)
+    q_mean = np.mean(query)
+    q_std = np.std(query)
+    mean, std = movmeanstd(ts,m)
+    dot = slidingDotProduct(query,ts)
 
+    return np.sqrt(2*m*(1-(dot-m*mean*q_mean)/(m*std*q_std)))
 
-    return np.sqrt(2*(m-(dot/std)))
+def massStomp(query,ts,dot_first,dot_prev,index,mean,std):
+    """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries using the STOMP dot product speedup."""
+    m = len(query)
+    dot = DotProductStomp(ts,m,dot_first,dot_prev,index)
+
+    #Return both the MASS calcuation and the dot product
+    return np.sqrt(2*m*(1-(dot-m*mean[index]*mean)/(m*std[index]*std))), dot
 
 
 def apply_av(mp,av=[1.0]):
