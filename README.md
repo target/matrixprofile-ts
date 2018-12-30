@@ -13,6 +13,8 @@ matrixprofile-ts is available on pip:
 
 `pip install matrixprofile-ts`
 
+Note: STOMP has been released on GitHub and included in the release of matrixprofile-ts 0.0.3
+
 
 ### Tutorial
 The GitHub repo includes a Jupyter Notebook tutorial containing basic examples of using matrix profile (see the docs folder). This notebook also renders automatically on the GitHub website.
