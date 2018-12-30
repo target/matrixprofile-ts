@@ -92,37 +92,19 @@ def slidingDotProduct(query,ts):
 def DotProductStomp(ts,m,dot_first,dot_prev,order):
     """Updates the sliding dot product for time series ts from the previous dot product dot_prev. QT(1,1) is pulled from the initial dot product as dot_first"""
 
-    #This should probably be vectorized...
-    #m = len(query)
-
-
     l = len(ts)-m+1
-    #dot = np.zeros(l)
-    #for i in range(l-1,0,-1):
-        #print(i)
-    #    dot[i] = dot_prev[i-1]-ts[order-1]*ts[i-1]+ts[order+m-1]*ts[i+m-1]
-    #Shift array by one
     dot = np.roll(dot_prev,1)
 
     dot += ts[order+m-1]*ts[m-1:l+m]-ts[order-1]*np.roll(ts[:l],1)
+
     #Update the first value in the dot product array
     dot[0] = dot_first[order]
 
     return dot
 
-def mass_old(query,ts):
-    """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries. MASS is a Euclidian distance similarity search algorithm. Note that Z-normalization of the query changes mu(query) to 0 and sigma(query) to 1, which greatly simplifies the MASS formula described in Yeh et.al"""
-
-    query_normalized = zNormalize(np.copy(query))
-    m = len(query)
-    std = movstd(ts,m)
-    dot = slidingDotProduct(query_normalized,ts)
-
-
-    return np.sqrt(2*(m-(dot/std)))
 
 def mass(query,ts):
-    """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries. MASS is a Euclidian distance similarity search algorithm. Note that Z-normalization of the query changes mu(query) to 0 and sigma(query) to 1, which greatly simplifies the MASS formula described in Yeh et.al"""
+    """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries. MASS is a Euclidian distance similarity search algorithm."""
 
     #query_normalized = zNormalize(np.copy(query))
     m = len(query)
@@ -135,10 +117,7 @@ def mass(query,ts):
 
 def massStomp(query,ts,dot_first,dot_prev,index,mean,std):
     """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries using the STOMP dot product speedup."""
-    #query??
-    #query_normalized = zNormalize(np.copy(query))
     m = len(query)
-    #std = movstd(ts,m)
     dot = DotProductStomp(ts,m,dot_first,dot_prev,index)
 
     #Return both the MASS calcuation and the dot product
