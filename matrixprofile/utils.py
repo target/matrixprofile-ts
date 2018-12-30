@@ -94,12 +94,17 @@ def DotProductStomp(ts,m,dot_first,dot_prev,order):
 
     #This should probably be vectorized...
     #m = len(query)
-    l = len(ts)-m+1
-    dot = np.zeros(l)
-    for i in range(l-1,0,-1):
-        #print(i)
-        dot[i] = dot_prev[i-1]-ts[order-1]*ts[i-1]+ts[order+m-1]*ts[i+m-1]
 
+
+    l = len(ts)-m+1
+    #dot = np.zeros(l)
+    #for i in range(l-1,0,-1):
+        #print(i)
+    #    dot[i] = dot_prev[i-1]-ts[order-1]*ts[i-1]+ts[order+m-1]*ts[i+m-1]
+    #Shift array by one
+    dot = np.roll(dot_prev,1)
+
+    dot += ts[order+m-1]*ts[m-1:l+m]-ts[order-1]*np.roll(ts[:l],1)
     #Update the first value in the dot product array
     dot[0] = dot_first[order]
 
