@@ -13,7 +13,7 @@ matrixprofile-ts is available on pip:
 
 `pip install matrixprofile-ts`
 
-Note: STOMP has been released on GitHub and included in the upcoming release of matrixprofile-ts 0.0.3 (target date: 12/31/18)
+Note: STOMP has been released on GitHub and included in the upcoming release of matrixprofile-ts 0.0.3
 
 
 ### Tutorial
