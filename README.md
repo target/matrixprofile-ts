@@ -50,7 +50,7 @@ There are several items of note:
 
 We can introduce an anomaly to the end of the time series and use STAMPI to detect it
 
-[!datampanom](https://github.com/target/matrixprofile-ts/blob/master/datampanom.png).
+![datampanom](https://github.com/target/matrixprofile-ts/blob/master/datampanom.png)
 
 The Matrix Profile has spiked in value, highlighting the (potential) presence of a new behavior. Note that Matrix Profile anomaly detection capabilities will depend on the nature of the data, as well as the selected subquery length parameter. Like all good algorithms, it's important to try out different parameter values.
 
