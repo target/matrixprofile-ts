@@ -36,7 +36,7 @@ Note that STOMP is highly recommended for calculating the Matrix Profile, due to
 
 A Jupyter notebook containing code for this example can be found [here](https://github.com/target/matrixprofile-ts/blob/master/docs/Matrix_Profile_Tutorial.ipynb)
 
-We can take a synthetic signal and use STOMP to calculate the corresponding Matrix Profile.
+We can take a synthetic signal and use STOMP to calculate the corresponding Matrix Profile (this is the same synthetic signal as in the [Golang Matrix Profile library](https://github.com/aouyang1/go-matrixprofile)
 
 ![datamp](https://github.com/target/matrixprofile-ts/blob/master/datamp.png)
 
