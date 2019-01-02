@@ -37,7 +37,7 @@ def massDistanceProfile(tsA,idx,m,tsB = None):
 
     query = tsA[idx:(idx+m)]
     n = len(tsB)
-    distanceProfile = mass(query,tsB)
+    distanceProfile = np.real(np.sqrt(mass(query,tsB).astype(complex)))
     if selfJoin:
         trivialMatchRange = (int(max(0,idx - np.round(m/2,0))),int(min(idx + np.round(m/2+1,0),n)))
         distanceProfile[trivialMatchRange[0]:trivialMatchRange[1]] = np.inf
@@ -60,14 +60,15 @@ def STOMPDistanceProfile(tsA,idx,m,tsB,dot_first,dp,mean,std):
 
     #Calculate the first distance profile via MASS
     if idx == 0:
-        distanceProfile = mass(query,tsB)
+        distanceProfile = np.real(np.sqrt(mass(query,tsB).astype(complex)))
 
         #Currently re-calculating the dot product separately as opposed to updating all of the mass function...
         dot = slidingDotProduct(query,tsB)
 
     #Calculate all subsequent distance profiles using the STOMP dot product shortcut
     else:
-        distanceProfile, dot = massStomp(query,tsB,dot_first,dp,idx,mean,std)
+        res, dot = massStomp(query,tsB,dot_first,dp,idx,mean,std)
+        distanceProfile = np.real(np.sqrt(res.astype(complex)))
 
 
     if selfJoin:

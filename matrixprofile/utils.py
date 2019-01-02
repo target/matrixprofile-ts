@@ -104,7 +104,7 @@ def DotProductStomp(ts,m,dot_first,dot_prev,order):
 
 
 def mass(query,ts):
-    """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries. MASS is a Euclidian distance similarity search algorithm."""
+    """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries. MASS is a Euclidian distance similarity search algorithm. Note that we are returning the square of MASS."""
 
     #query_normalized = zNormalize(np.copy(query))
     m = len(query)
@@ -113,15 +113,24 @@ def mass(query,ts):
     mean, std = movmeanstd(ts,m)
     dot = slidingDotProduct(query,ts)
 
-    return np.sqrt(2*m*(1-(dot-m*mean*q_mean)/(m*std*q_std)))
+    #res = np.sqrt(2*m*(1-(dot-m*mean*q_mean)/(m*std*q_std)))
+    res = 2*m*(1-(dot-m*mean*q_mean)/(m*std*q_std))
+
+
+    return res
 
 def massStomp(query,ts,dot_first,dot_prev,index,mean,std):
-    """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries using the STOMP dot product speedup."""
+    """Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries using the STOMP dot product speedup. Note that we are returning the square of MASS."""
     m = len(query)
     dot = DotProductStomp(ts,m,dot_first,dot_prev,index)
 
     #Return both the MASS calcuation and the dot product
-    return np.sqrt(2*m*(1-(dot-m*mean[index]*mean)/(m*std[index]*std))), dot
+
+    #res = np.sqrt(2*m*(1-(dot-m*mean[index]*mean)/(m*std[index]*std)))
+    res = 2*m*(1-(dot-m*mean[index]*mean)/(m*std[index]*std))
+    #res[np.isnan(res)] = 0.0
+
+    return res, dot
 
 
 def apply_av(mp,av=[1.0]):

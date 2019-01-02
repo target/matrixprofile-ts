@@ -92,7 +92,7 @@ class TestClass(object):
 
         outcome = np.array([0.0])
 
-        assert np.allclose(mass(a,b), outcome)
+        assert np.allclose(np.sqrt(mass(a,b)), outcome)
 
 
     def test_massStomp(self):
@@ -109,7 +109,7 @@ class TestClass(object):
 
         mass, dot = massStomp(query,ts,dot_first,dot_prev,index,mean,std)
 
-        assert np.allclose(mass, outcome)
+        assert np.allclose(np.sqrt(mass), outcome)
 
 
     def test_apply_av(self):
