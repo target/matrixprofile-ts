@@ -8,7 +8,7 @@ matrixprofile-ts is a Python 3 library for evaluating time series data using the
 ## Contents
 - [Installation](#installation)
 - [Quick start](#quick-start)
-- [Detailed Example](#example)
+- [Detailed Example](#detailed-example)
 - [Matrix Profile in Other Languages](#matrix-profile-in-other-languages)
 - [Contact](#contact)
 - [Citations](#citations)
@@ -19,7 +19,7 @@ Major releases of matrixprofile-ts are available on the Python Package Index:
 
 `pip install matrixprofile-ts`
 
-Details about each release can be found [here](https://github.com/target/matrixprofile-ts/docs/Releases.md).
+Details about each release can be found [here](https://github.com/target/matrixprofile-ts/blob/docs/Releases.md).
 
 ## Quick start
 
@@ -34,11 +34,11 @@ Note that STOMP is highly recommended for calculating the Matrix Profile, due to
 
 ## Detailed example
 
-A Jupyter notebook containing code for this example can be found [here](https://github.com/target/matrixprofile-ts/docs/Matrix_Profile_Tutorial.ipynb)
+A Jupyter notebook containing code for this example can be found [here](https://github.com/target/matrixprofile-ts/blob/docs/Matrix_Profile_Tutorial.ipynb)
 
 We can take a synthetic signal and use STOMP to calculate the corresponding Matrix Profile.
 
-![datamp](https://github.com/target/matrixprofile-ts/datamp.png)
+![datamp](https://github.com/target/matrixprofile-ts/blob/updated_tutorial/datamp.png)
 
 There are several items of note:
 
@@ -49,7 +49,7 @@ There are several items of note:
 
 We can introduce an anomaly to the end of the time series and use STAMPI to detect it
 
-[!datampanom](https://github.com/target/matrixprofile-ts/datampanom.png).
+[!datampanom](https://github.com/target/matrixprofile-ts/blob/datampanom.png).
 
 The Matrix Profile has spiked in value, highlighting the (potential) presence of a new behavior. Note that Matrix Profile anomaly detection capabilities will depend on the nature of the data, as well as the selected subquery length parameter. Like all good algorithms, it's important to try out different parameter values.
 
