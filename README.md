@@ -40,6 +40,7 @@ We can take a synthetic signal and use STOMP to calculate the corresponding Matr
 
 ![datamp](https://github.com/target/matrixprofile-ts/blob/updated_tutorial/datamp.png)
 
+
 There are several items of note:
 
 - The Matrix Profile value jumps at each phase change. High Matrix Profile values are associated with "discords": time series behavior that hasn't been observed before.
