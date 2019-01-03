@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 # matrixprofile-ts
 
-matrixprofile-ts is a Python 3 library for evaluating time series data using the matrix profile algorithms developed by the Keough and Mueen research groups at the University of California-Riverside and the University of New Mexico. Current algorithms implemented include MASS, STMP, STAMP, STAMPI and STOMP.
+matrixprofile-ts is a Python 3 library for evaluating time series data using the Matrix Profile algorithms developed by the Keough and Mueen research groups at UC-Riverside and the University of New Mexico. Current implementations include MASS, STMP, STAMP, STAMPI and STOMP.
 
 ## Contents
 - [Installation](#installation)
@@ -30,7 +30,7 @@ Details about each release can be found [here](https://github.com/target/matrixp
 >>> matrixProfile.stomp(a,4)
 (array([0., 0., 0., 0., 0., 0., 0., 0., 0.]), array([4., 5., 6., 7., 0., 1., 2., 3., 0.]))
 ```
-Note that STOMP is highly recommended for calculating the Matrix Profile, due to its speed.
+Note that STOMP is highly recommended for calculating the Matrix Profile due to its speed.
 
 ## Detailed example
 
