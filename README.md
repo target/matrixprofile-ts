@@ -7,6 +7,8 @@ matrixprofile-ts is a Python 3 library for evaluating time series data using the
 
 Read the Target blog post [here](https://tech.target.com/2018/12/11/matrix-profile.html).
 
+Further academic description can be found [here](https://www.cs.ucr.edu/~eamonn/MatrixProfile.html).
+
 ## Contents
 - [Installation](#installation)
 - [Quick start](#quick-start)
