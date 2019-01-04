@@ -1,5 +1,5 @@
 [![PyPI version](https://badge.fury.io/py/matrixprofile-ts.svg)](https://badge.fury.io/py/matrixprofile-ts)
-[![Build Status](https://travis-ci.org/target/matrixprofile-ts.png)](https://travis-ci.org/target/matrixprofile-ts)
+[![Build Status](https://travis-ci.org/target/matrixprofile-ts.svg)](https://travis-ci.org/target/matrixprofile-ts)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 # matrixprofile-ts
 
