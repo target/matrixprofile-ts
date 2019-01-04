@@ -49,9 +49,9 @@ def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sa
     #Define max numbers of iterations to sample
     iters = (len(tsA)-m+1)*sampling
 
-    iter = 0
+    iter_val = 0
 
-    while iter < iters:
+    while iter_val < iters:
         (distanceProfile,querySegmentsID) = distanceProfileFunction(tsA,idx,m,tsB)
 
         #Check which of the indices have found a new minimum
@@ -64,7 +64,7 @@ def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sa
         mp = np.minimum(mp,distanceProfile)
         idx = order.next()
 
-        iter += 1
+        iter_val += 1
     return (mp,mpIndex)
 
 
