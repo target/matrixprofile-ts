@@ -17,7 +17,7 @@ def zNormalize(ts):
     std = np.std(ts)
 
     if std <= 1E-15:
-        raise ValueError("The Standard Deviation must be postive")
+        raise ValueError("The Standard Deviation must be postive. Constant timeseries ?")
     else:
         ts /= std
 
@@ -46,6 +46,9 @@ def movmeanstd(ts,m):
 
     movmean = segSum/m
     movstd = np.sqrt(segSumSq / m - (segSum/m) ** 2)
+    
+    if np.any(movstd <= 1E-15):
+        raise ValueError("The Standard Deviation must be postive. Constant subsequence ?")
 
     return [movmean,movstd]
 
@@ -61,8 +64,11 @@ def movstd(ts,m):
     sSq = np.insert(np.cumsum(ts ** 2),0,0)
     segSum = s[m:] - s[:-m]
     segSumSq = sSq[m:] -sSq[:-m]
+    _movstd = np.sqrt(segSumSq / m - (segSum/m) ** 2)
+    if np.any(_movstd <= 1E-15):
+        raise ValueError("The Standard Deviation must be postive. Constant subsequence ?")
 
-    return np.sqrt(segSumSq / m - (segSum/m) ** 2)
+    return movstd
 
 def slidingDotProduct(query,ts):
     """Calculate the dot product between the query and all subsequences of length(query) in the timeseries ts. Note that we use Numpy's rfft method instead of fft."""
@@ -119,6 +125,8 @@ def mass(query,ts):
     m = len(query)
     q_mean = np.mean(query)
     q_std = np.std(query)
+    if q_std <= 1E-15:
+        raise ValueError("The Standard Deviation must be postive. Constant query ?")
     mean, std = movmeanstd(ts,m)
     dot = slidingDotProduct(query,ts)
 
