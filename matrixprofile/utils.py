@@ -16,8 +16,8 @@ def zNormalize(ts):
     ts -= np.mean(ts)
     std = np.std(ts)
 
-    if std == 0:
-        raise ValueError("The Standard Deviation cannot be zero")
+    if std <= 1E-15:
+        raise ValueError("The Standard Deviation must be postive")
     else:
         ts /= std
 
