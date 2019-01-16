@@ -25,7 +25,7 @@ def discords(mp,ex_zone,k=3):
     k = len(mp) if k > len(mp) else k
 
     mp_current = np.copy(mp)
-    d = np.zeros(k)
+    d = np.zeros(k, dtype='int')
     for i in range(k):
         maxVal = 0
         maxIdx = sys.maxsize
