@@ -154,15 +154,40 @@ def stampi_update(tsA,m,mp,mpIndex,newval,tsB=None,distanceProfileFunction=dista
 
 
 def naiveMP(tsA,m,tsB=None):
+    """
+    Calculate the Matrix Profile using the naive all-pairs calculation.
+    :tsA: Time series containing the queries for which to calculate the Matrix Profile.
+    :m: Length of subsequence to compare.
+    :tsB: Time series to compare the query against. Note that, if no value is provided, tsB = tsA by default.
+    """
     return _matrixProfile(tsA,m,order.linearOrder,distanceProfile.naiveDistanceProfile,tsB)
 
 def stmp(tsA,m,tsB=None):
+    """
+    Calculate the Matrix Profile using the more efficient MASS calculation. Distance profiles are computed linearly across every time series index.
+    :tsA: Time series containing the queries for which to calculate the Matrix Profile.
+    :m: Length of subsequence to compare.
+    :tsB: Time series to compare the query against. Note that, if no value is provided, tsB = tsA by default.
+    """
     return _matrixProfile(tsA,m,order.linearOrder,distanceProfile.massDistanceProfile,tsB)
 
 def stamp(tsA,m,tsB=None,sampling=0.2):
+    """
+    Calculate the Matrix Profile using the more efficient MASS calculation. Distance profiles are computed in a random order.
+    :tsA: Time series containing the queries for which to calculate the Matrix Profile.
+    :m: Length of subsequence to compare.
+    :tsB: Time series to compare the query against. Note that, if no value is provided, tsB = tsA by default.
+    :sampling: The percentage of all possible distance profiles to sample for the final Matrix Profile.
+    """
     return _matrixProfile_sampling(tsA,m,order.randomOrder,distanceProfile.massDistanceProfile,tsB,sampling=sampling)
 
 def stomp(tsA,m,tsB=None):
+    """
+    Calculate the Matrix Profile using the more efficient MASS calculation. Distance profiles are computed according to the directed STOMP procedure.
+    :tsA: Time series containing the queries for which to calculate the Matrix Profile.
+    :m: Length of subsequence to compare.
+    :tsB: Time series to compare the query against. Note that, if no value is provided, tsB = tsA by default.
+    """
     return _matrixProfile_stomp(tsA,m,order.linearOrder,distanceProfile.STOMPDistanceProfile,tsB)
 
 

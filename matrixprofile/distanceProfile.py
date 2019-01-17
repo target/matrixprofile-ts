@@ -11,7 +11,13 @@ from .utils import *
 import numpy as np
 
 def naiveDistanceProfile(tsA,idx,m,tsB = None):
-    '''Return the distance profile of a query within tsA against the time series tsB. Uses the naive all-pairs comparison. idx defines the starting index of the query within tsA and m is the length of the query.'''
+    """
+    Returns the distance profile of a query within tsA against the time series tsB using the naive all-pairs comparison.
+    :tsA: Time series containing the query for which to calculate the distance profile.
+    :idx: Starting location of the query within tsA
+    :m: Length of query.
+    :tsB: Time series to compare the query against. Note that, if no value is provided, tsB = tsA by default.
+    """
 
     selfJoin = False
     if tsB is None:
@@ -36,8 +42,13 @@ def naiveDistanceProfile(tsA,idx,m,tsB = None):
 
 
 def massDistanceProfile(tsA,idx,m,tsB = None):
-    '''Return the distance profile of a query within tsA against the time series tsB. Uses the more efficient MASS comparison. idx defines the starting index of the query within tsA and m is the length of the query.'''
-
+    """
+    Returns the distance profile of a query within tsA against the time series tsB using the more efficient MASS comparison.
+    :tsA: Time series containing the query for which to calculate the distance profile.
+    :idx: Starting location of the query within tsA
+    :m: Length of query.
+    :tsB: Time series to compare the query against. Note that, if no value is provided, tsB = tsA by default.
+    """
 
     selfJoin = False
     if tsB is None:
@@ -56,8 +67,17 @@ def massDistanceProfile(tsA,idx,m,tsB = None):
 
 
 def STOMPDistanceProfile(tsA,idx,m,tsB,dot_first,dp,mean,std):
-    '''Return the distance profile of a query within tsA against the time series tsB. Uses the more efficient MASS comparison. idx defines the starting index of the query within tsA and m is the length of the query.'''
-
+    """
+    Returns the distance profile of a query within tsA against the time series tsB using the even more efficient iterative STOMP calculation. Note that the method requires a pre-calculated 'initial' sliding dot product
+    :tsA: Time series containing the query for which to calculate the distance profile.
+    :idx: Starting location of the query within tsA
+    :m: Length of query.
+    :tsB: Time series to compare the query against. Note that, for the time being, only tsB = tsA is allowed
+    :dot_first: The 'initial' sliding dot product, or QT(1,1) in Zhu et.al
+    :dp:: The dot product between tsA and the query starting at index m-1
+    :mean: an array containing the mean of every subsequence of length m in tsA (moving window)
+    :std: an array containing the mean of every subsequence of length m in tsA (moving window)
+    """
 
     selfJoin = False
     if tsB is None:

@@ -10,16 +10,24 @@ range = getattr(__builtins__, 'xrange', range)
 import random
 
 class Order:
-    '''These objects define the order in which the distance profiles are calculated for a given matrix profile'''
+    """
+    An object that defines the order in which the distance profiles are calculated for a given Matrix Profile
+    """
     def next(self):
         raise NotImplementedError("next() not implemented")
 
 class linearOrder(Order):
+    """
+    An object that defines a linear (iterative) order in which the distance profiles are calculated for a given Matrix Profile
+    """
     def __init__(self,m):
         self.m = m
         self.idx = -1
 
     def next(self):
+        """
+        Advances the Order object to the next index
+        """
         self.idx += 1
         if self.idx < self.m:
             return self.idx
@@ -28,12 +36,18 @@ class linearOrder(Order):
 
 
 class randomOrder(Order):
+    """
+    An object that defines a random order in which the distance profiles are calculated for a given Matrix Profile
+    """
     def __init__(self,m):
         self.idx = -1
         self.indices = list(range(m))
         random.shuffle(self.indices)
 
     def next(self):
+        """
+        Advances the Order object to the next index
+        """
         self.idx += 1
         try:
             return self.indices[self.idx]
