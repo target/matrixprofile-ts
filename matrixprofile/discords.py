@@ -11,12 +11,14 @@ import sys
 import numpy as np
 
 def discords(mp,ex_zone,k=3):
-    """Computes the top k discords from a matrix profile
+    """
+    Computes the top k discords from a matrix profile
 
-    Keyword arguments:
-    mp -- matrix profile numpy array
-    k -- the number of discords to discover
-    ex_zone -- the number of samples to exclude and set to Inf on either side of a found discord
+    Parameters
+    ----------
+    mp: matrix profile numpy array
+    k: the number of discords to discover
+    ex_zone: the number of samples to exclude and set to Inf on either side of a found discord
 
     Returns a list of indexes represent the discord starting locations. MaxInt indicates there
     were no more discords that could be found due to too many exclusions or profile being too
@@ -38,4 +40,3 @@ def discords(mp,ex_zone,k=3):
         mp_current[max([maxIdx-ex_zone, 0]):min([maxIdx+ex_zone, len(mp_current)])] = np.inf
 
     return d
-
