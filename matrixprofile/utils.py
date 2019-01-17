@@ -12,8 +12,11 @@ import numpy.fft as fft
 
 def zNormalize(ts):
     """
-    Return a z-normalized version of a time series
-    :ts: time series to be normalized
+    Returns a z-normalized version of a time series.
+
+    Parameters
+    ----------
+    ts: Time series to be normalized
     """
 
     ts -= np.mean(ts)
@@ -28,9 +31,12 @@ def zNormalize(ts):
 
 def zNormalizeEuclidian(tsA,tsB):
     """
-    Return the z-normalized Euclidian distance between two time series.
-    :tsA: time series #1
-    :tsB: time series #2
+    Returns the z-normalized Euclidian distance between two time series.
+
+    Parameters
+    ----------
+    tsA: Time series #1
+    tsB: Time series #2
     """
 
     if len(tsA) != len(tsB):
@@ -41,8 +47,11 @@ def zNormalizeEuclidian(tsA,tsB):
 def movmeanstd(ts,m):
     """
     Calculate the mean and standard deviation within a moving window passing across a time series.
-    :ts: time series to evaluate
-    :m: width of the moving window
+
+    Parameters
+    ----------
+    ts: Time series to evaluate.
+    m: Width of the moving window.
     """
     if m <= 1:
         raise ValueError("Query length must be longer than one")
@@ -63,8 +72,11 @@ def movmeanstd(ts,m):
 def movstd(ts,m):
     """
     Calculate the standard deviation within a moving window passing across a time series.
-    :ts: time series to evaluate
-    :m: width of the moving window
+
+    Parameters
+    ----------
+    ts: Time series to evaluate.
+    m: Width of the moving window.
     """
     if m <= 1:
         raise ValueError("Query length must be longer than one")
@@ -80,7 +92,14 @@ def movstd(ts,m):
     return np.sqrt(segSumSq / m - (segSum/m) ** 2)
 
 def slidingDotProduct(query,ts):
-    """Calculate the dot product between a query and all subsequences of length(query) in the timeseries ts. Note that we use Numpy's rfft method instead of fft."""
+    """
+    Calculate the dot product between a query and all subsequences of length(query) in the timeseries ts. Note that we use Numpy's rfft method instead of fft.
+
+    Parameters
+    ----------
+    query: Specific time series query to evaluate.
+    ts: Time series to calculate the query's sliding dot product against.
+    """
 
     m = len(query)
     n = len(ts)
@@ -116,11 +135,14 @@ def slidingDotProduct(query,ts):
 def DotProductStomp(ts,m,dot_first,dot_prev,order):
     """
     Updates the sliding dot product for a time series ts from the previous dot product dot_prev.
-    :ts: Time series under analysis.
-    :m: length of query within sliding dot product
-    :dot_first: The dot product between ts and the beginning query (QT1,1 in Zhu et.al)
-    :dot_prev: The dot product between ts and the query starting at index-1
-    :order: the location of the first point in the query
+
+    Parameters
+    ----------
+    ts: Time series under analysis.
+    m: Length of query within sliding dot product.
+    dot_first: The dot product between ts and the beginning query (QT1,1 in Zhu et.al).
+    dot_prev: The dot product between ts and the query starting at index-1.
+    order: The location of the first point in the query.
     """
 
     l = len(ts)-m+1
@@ -137,6 +159,9 @@ def DotProductStomp(ts,m,dot_first,dot_prev,order):
 def mass(query,ts):
     """
     Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS): a Euclidian distance similarity search algorithm. Note that we are returning the square of MASS.
+
+    Parameters
+    ----------
     :query: Time series snippet to evaluate. Note that the query does not have to be a subset of ts.
     :ts: Time series to compare against query.
     """
@@ -157,13 +182,16 @@ def mass(query,ts):
 def massStomp(query,ts,dot_first,dot_prev,index,mean,std):
     """
     Calculates Mueen's ultra-fast Algorithm for Similarity Search (MASS) between a query and timeseries using the STOMP dot product speedup. Note that we are returning the square of MASS.
-    :query: Time series snippet to evaluate. Note that, for STOMP, the query must be a subset of ts.
-    :ts: Time series to compare against query.
-    :dot_first: The dot product between ts and the beginning query (QT1,1 in Zhu et.al)
-    :dot_prev: The dot product between ts and the query starting at index-1
-    :index: the location of the first point in the query
-    :mean: an array containing the mean of every subsequence in ts
-    :std: an array containing the standard deviation of every subsequence in ts
+
+    Parameters
+    ----------
+    query: Time series snippet to evaluate. Note that, for STOMP, the query must be a subset of ts.
+    ts: Time series to compare against query.
+    dot_first: The dot product between ts and the beginning query (QT1,1 in Zhu et.al).
+    dot_prev: The dot product between ts and the query starting at index-1.
+    index: The location of the first point in the query.
+    mean: Array containing the mean of every subsequence in ts.
+    std: Array containing the standard deviation of every subsequence in ts.
     """
     m = len(query)
     dot = DotProductStomp(ts,m,dot_first,dot_prev,index)
@@ -177,8 +205,11 @@ def massStomp(query,ts,dot_first,dot_prev,index,mean,std):
 def apply_av(mp,av=[1.0]):
     """
     Applies an annotation vector to a Matrix Profile.
-    :mp: tuple containing the Matrix Profile and Matrix Profile Index
-    :av: numpy array containing the annotation vector
+
+    Parameters
+    ----------
+    mp: Tuple containing the Matrix Profile and Matrix Profile Index.
+    av: Numpy array containing the annotation vector.
     """
 
     if len(mp[0]) != len(av):
