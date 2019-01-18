@@ -12,6 +12,25 @@ from . import order
 from .utils import mass, movmeanstd
 import numpy as np
 
+def _self_join_or_not_preprocess(tsA, tsB, m):
+    """
+    Core method for determining if a self join is occuring and returns appropriate
+    profile and index numpy arrays with correct dimensions as all np.nan values.
+    
+    Parameters
+    ----------
+    tsA: Time series containing the queries for which to calculate the Matrix Profile.
+    tsB: Time series to compare the query against. Note that, if no value is provided, ts_b = ts_a by default.
+    m: Length of subsequence to compare.
+    """
+    n = len(tsA)
+    if tsB is not None:
+        n = len(tsB)
+    
+    shape = n - m + 1
+    
+    return (np.full(shape, np.inf), np.full(shape, np.inf))
+
 def _matrixProfile(tsA,m,orderClass,distanceProfileFunction,tsB=None):
     """
     Core method for calculating the Matrix Profile
@@ -26,15 +45,7 @@ def _matrixProfile(tsA,m,orderClass,distanceProfileFunction,tsB=None):
     """
 
     order = orderClass(len(tsA)-m+1)
-
-    #Account for the case where tsB is None (note that tsB = None triggers a self matrix profile)
-    if tsB is None:
-        mp = np.full(len(tsA)-m+1,np.inf)
-        mpIndex = np.full(len(tsA)-m+1,np.inf)
-
-    else:
-        mp = np.full(len(tsB)-m+1,np.inf)
-        mpIndex = np.full(len(tsB)-m+1,np.inf)
+    mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
 
     idx=order.next()
     while idx != None:
@@ -55,15 +66,7 @@ def _matrixProfile(tsA,m,orderClass,distanceProfileFunction,tsB=None):
 
 def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sampling=0.2):
     order = orderClass(len(tsA)-m+1)
-
-    #Account for the case where tsB is None (note that tsB = None triggers a self matrix profile)
-    if tsB is None:
-        mp = np.full(len(tsA)-m+1,np.inf)
-        mpIndex = np.full(len(tsA)-m+1,np.inf)
-
-    else:
-        mp = np.full(len(tsB)-m+1,np.inf)
-        mpIndex = np.full(len(tsB)-m+1,np.inf)
+    mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
 
     idx=order.next()
 
@@ -92,15 +95,7 @@ def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sa
 #Write matrix profile function for STOMP and then consolidate later! (aka link to the previous distance profile)
 def _matrixProfile_stomp(tsA,m,orderClass,distanceProfileFunction,tsB=None):
     order = orderClass(len(tsA)-m+1)
-
-    #Account for the case where tsB is None (note that tsB = None triggers a self matrix profile)
-    if tsB is None:
-        mp = np.full(len(tsA)-m+1,np.inf)
-        mpIndex = np.full(len(tsA)-m+1,np.inf)
-
-    else:
-        mp = np.full(len(tsB)-m+1,np.inf)
-        mpIndex = np.full(len(tsB)-m+1,np.inf)
+    mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
 
     idx=order.next()
 
