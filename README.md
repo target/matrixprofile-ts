@@ -36,11 +36,11 @@ Details about each release can be found [here](https://github.com/target/matrixp
 ```
 Note that STOMP is highly recommended for calculating the Matrix Profile due to its speed.
 
-## Detailed example
+## Examples
 
-A Jupyter notebook containing code for this example can be found [here](https://github.com/target/matrixprofile-ts/blob/master/docs/Matrix_Profile_Tutorial.ipynb)
+Jupyter notebooks containing various examples of how to use matrixprofile-ts can be found under `docs/examples`.
 
-We can take a synthetic signal and use STOMP to calculate the corresponding Matrix Profile (this is the same synthetic signal as in the [Golang Matrix Profile library](https://github.com/aouyang1/go-matrixprofile))
+As a basic introduction, we can take a synthetic signal and use STOMP to calculate the corresponding Matrix Profile (this is the same synthetic signal as in the [Golang Matrix Profile library](https://github.com/aouyang1/go-matrixprofile)). Code for this example can be found [here](https://github.com/target/matrixprofile-ts/blob/master/docs/examples/Matrix_Profile_Tutorial.ipynb)
 
 ![datamp](https://github.com/target/matrixprofile-ts/blob/master/datamp.png)
 
