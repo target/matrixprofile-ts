@@ -19,13 +19,13 @@ def zNormalize(ts):
     ts: Time series to be normalized
     """
 
-    ts -= np.mean(ts)
+    mu = np.mean(ts)
     std = np.std(ts)
 
     if std == 0:
         raise ValueError("The Standard Deviation cannot be zero")
-    else:
-        ts /= std
+    
+    ts = (ts - mu) / std
 
     return ts
 
