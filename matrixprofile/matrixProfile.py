@@ -66,7 +66,18 @@ def _matrixProfile(tsA,m,orderClass,distanceProfileFunction,tsB=None):
 
     return (mp,mpIndex)
 
-def _stamp_parallel(tsA, m, tsB=None, sampling=0.2, n_threads=None):
+def _stamp_parallel(tsA, m, tsB=None, sampling=0.2, n_threads=-1):
+    """
+    Computes distance profiles in parallel using all CPU cores by default.
+    
+    Parameters
+    ----------
+    tsA: Time series containing the queries for which to calculate the Matrix Profile.
+    m: Length of subsequence to compare.
+    tsB: Time series to compare the query against. Note that, if no value is provided, tsB = tsA by default.
+    sampling: The percentage of all possible distance profiles to sample for the final Matrix Profile. 0 to 1
+    n_threads: Number of threads to use in parallel mode. Defaults to using all CPU cores.
+    """
     if n_threads is -1:
         n_threads = multiprocessing.cpu_count()
     
