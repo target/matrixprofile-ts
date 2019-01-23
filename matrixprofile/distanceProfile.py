@@ -71,6 +71,24 @@ def massDistanceProfile(tsA,idx,m,tsB = None):
     #Both the distance profile and corresponding matrix profile index (which should just have the current index)
     return (distanceProfile,np.full(n-m+1,idx,dtype=float))
 
+def mass_distance_profile_parallel(indices, tsA=None, tsB=None, m=None):
+    """
+    Computes distance profiles for the given indices either via self join or similarity search.
+    
+    Parameters
+    ----------
+    indices: Array of indices to compute distance profile for.
+    tsA: Time series containing the query for which to calculate the distance profile.
+    tsB: Time series to compare the query against. Note that, for the time being, only tsB = tsA is allowed
+    m: Length of query.
+    """
+    distance_profiles = []
+    
+    for index in indices:
+        distance_profiles.append(massDistanceProfile(tsA, index, m, tsB=tsB))
+    
+    return distance_profiles
+
 
 def STOMPDistanceProfile(tsA,idx,m,tsB,dot_first,dp,mean,std):
     """
