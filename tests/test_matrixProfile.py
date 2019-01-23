@@ -158,3 +158,13 @@ class TestClass(object):
         r = stomp(a,4)
 
         assert(r[1] == mpi_outcome).all()
+        
+    def test_stamp_sampling_over_one(self):
+        with pytest.raises(ValueError) as excinfo:
+            stamp(None,None,sampling=2)
+        assert 'Sampling value must be a percentage' in str(excinfo.value)
+        
+    def test_stamp_sampling_under_zero(self):
+        with pytest.raises(ValueError) as excinfo:
+            stamp(None,None,sampling=-1)
+        assert 'Sampling value must be a percentage' in str(excinfo.value)
