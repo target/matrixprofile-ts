@@ -11,6 +11,9 @@ from . import distanceProfile
 from . import order
 from .utils import mass, movmeanstd
 import numpy as np
+import multiprocessing
+from functools import partial
+import math
 
 def _self_join_or_not_preprocess(tsA, tsB, m):
     """
@@ -63,9 +66,58 @@ def _matrixProfile(tsA,m,orderClass,distanceProfileFunction,tsB=None):
 
     return (mp,mpIndex)
 
+def _stamp_parallel(tsA, m, tsB=None, sampling=0.2, n_threads=-1, random_state=None):
+    """
+    Computes distance profiles in parallel using all CPU cores by default.
+    
+    Parameters
+    ----------
+    tsA: Time series containing the queries for which to calculate the Matrix Profile.
+    m: Length of subsequence to compare.
+    tsB: Time series to compare the query against. Note that, if no value is provided, tsB = tsA by default.
+    sampling: The percentage of all possible distance profiles to sample for the final Matrix Profile. 0 to 1
+    n_threads: Number of threads to use in parallel mode. Defaults to using all CPU cores.
+    random_state: Set the random seed generator for reproducible results.
+    """
+    if n_threads is -1:
+        n_threads = multiprocessing.cpu_count()
+    
+    n = len(tsA)
+    mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
 
-def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sampling=0.2):
-    order = orderClass(len(tsA)-m+1)
+    # determine sampling size
+    sample_size = math.ceil((n - m + 1) * sampling)
+    
+    # generate indices to sample and split based on n_threads
+    if random_state is not None:
+        np.random.seed(random_state)
+    
+    indices = np.arange(n - m + 1)
+    indices = np.random.choice(indices, size=sample_size, replace=False)
+    indices = np.array_split(indices, n_threads)
+    
+    # create pool of workers and compute
+    with multiprocessing.Pool(processes=n_threads) as pool:
+        func = partial(distanceProfile.mass_distance_profile_parallel, tsA=tsA, tsB=tsB, m=m)
+        results = pool.map(func, indices)
+    
+    # The overall matrix profile is the element-wise minimum of each sub-profile, and each element of the overall
+    # matrix profile index is the time series position of the corresponding sub-profile.
+    for result in results:
+        for dp, querySegmentsID in result:
+            #Check which of the indices have found a new minimum
+            idsToUpdate = dp < mp
+
+            #Update the Matrix Profile Index to indicate that the current index is the minimum location for the aforementioned indices
+            mpIndex[idsToUpdate] = querySegmentsID[idsToUpdate]
+
+            #Update the matrix profile to include the new minimum values (where appropriate)
+            mp = np.minimum(mp, dp)
+
+    return (mp, mpIndex)
+
+def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sampling=0.2,random_state=None):
+    order = orderClass(len(tsA)-m+1, random_state=random_state)
     mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
 
     idx=order.next()
@@ -184,7 +236,7 @@ def stmp(tsA,m,tsB=None):
     """
     return _matrixProfile(tsA,m,order.linearOrder,distanceProfile.massDistanceProfile,tsB)
 
-def stamp(tsA,m,tsB=None,sampling=0.2):
+def stamp(tsA,m,tsB=None,sampling=0.2, n_threads=None, random_state=None):
     """
     Calculate the Matrix Profile using the more efficient MASS calculation. Distance profiles are computed in a random order.
 
@@ -193,9 +245,17 @@ def stamp(tsA,m,tsB=None,sampling=0.2):
     tsA: Time series containing the queries for which to calculate the Matrix Profile.
     m: Length of subsequence to compare.
     tsB: Time series to compare the query against. Note that, if no value is provided, tsB = tsA by default.
-    sampling: The percentage of all possible distance profiles to sample for the final Matrix Profile.
+    sampling: The percentage of all possible distance profiles to sample for the final Matrix Profile. 0 to 1
+    n_threads: Number of threads to use in parallel mode. Defaults to single threaded mode. Set to -1 to use all threads.
+    random_state: Set the random seed generator for reproducible results.
     """
-    return _matrixProfile_sampling(tsA,m,order.randomOrder,distanceProfile.massDistanceProfile,tsB,sampling=sampling)
+    if sampling > 1 or sampling < 0:
+        raise ValueError('Sampling value must be a percentage in decimal format from 0 to 1.')
+    
+    if n_threads is None:
+        return _matrixProfile_sampling(tsA,m,order.randomOrder,distanceProfile.massDistanceProfile,tsB,sampling=sampling,random_state=random_state)
+    
+    return _stamp_parallel(tsA, m, tsB=tsB, sampling=sampling, n_threads=n_threads, random_state=random_state)
 
 def stomp(tsA,m,tsB=None):
     """
