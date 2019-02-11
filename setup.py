@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="matrixprofile-ts",
-    version="0.0.3",
+    version="0.0.4",
     author="Andrew Van Benschoten",
     author_email="andrew.vanbenschoten@target.com",
     description="An Open Source Python Time Series Library For Motif Discovery using Matrix Profile",
