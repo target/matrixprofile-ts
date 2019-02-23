@@ -68,7 +68,7 @@ def movstd(ts,m):
     if np.any(_movstd <= 1E-15):
         raise ValueError("The Standard Deviation must be postive. Constant subsequence ?")
 
-    return movstd
+    return _movstd
 
 def slidingDotProduct(query,ts):
     """Calculate the dot product between the query and all subsequences of length(query) in the timeseries ts. Note that we use Numpy's rfft method instead of fft."""
