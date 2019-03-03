@@ -11,7 +11,16 @@ from .utils import *
 import numpy as np
 
 def naiveDistanceProfile(tsA,idx,m,tsB = None):
-    '''Return the distance profile of a query within tsA against the time series tsB. Uses the naive all-pairs comparison. idx defines the starting index of the query within tsA and m is the length of the query.'''
+    """
+    Returns the distance profile of a query within tsA against the time series tsB using the naive all-pairs comparison.
+
+    Parameters
+    ----------
+    tsA: Time series containing the query for which to calculate the distance profile.
+    idx: Starting location of the query within tsA
+    m: Length of query.
+    tsB: Time series to compare the query against. Note that, if no value is provided, tsB = tsA by default.
+    """
 
     selfJoin = False
     if tsB is None:
@@ -36,8 +45,16 @@ def naiveDistanceProfile(tsA,idx,m,tsB = None):
 
 
 def massDistanceProfile(tsA,idx,m,tsB = None):
-    '''Return the distance profile of a query within tsA against the time series tsB. Uses the more efficient MASS comparison. idx defines the starting index of the query within tsA and m is the length of the query.'''
+    """
+    Returns the distance profile of a query within tsA against the time series tsB using the more efficient MASS comparison.
 
+    Parameters
+    ----------
+    tsA: Time series containing the query for which to calculate the distance profile.
+    idx: Starting location of the query within tsA
+    m: Length of query.
+    tsB: Time series to compare the query against. Note that, if no value is provided, tsB = tsA by default.
+    """
 
     selfJoin = False
     if tsB is None:
@@ -54,10 +71,40 @@ def massDistanceProfile(tsA,idx,m,tsB = None):
     #Both the distance profile and corresponding matrix profile index (which should just have the current index)
     return (distanceProfile,np.full(n-m+1,idx,dtype=float))
 
+def mass_distance_profile_parallel(indices, tsA=None, tsB=None, m=None):
+    """
+    Computes distance profiles for the given indices either via self join or similarity search.
+    
+    Parameters
+    ----------
+    indices: Array of indices to compute distance profile for.
+    tsA: Time series containing the query for which to calculate the distance profile.
+    tsB: Time series to compare the query against. Note that, for the time being, only tsB = tsA is allowed
+    m: Length of query.
+    """
+    distance_profiles = []
+    
+    for index in indices:
+        distance_profiles.append(massDistanceProfile(tsA, index, m, tsB=tsB))
+    
+    return distance_profiles
+
 
 def STOMPDistanceProfile(tsA,idx,m,tsB,dot_first,dp,mean,std):
-    '''Return the distance profile of a query within tsA against the time series tsB. Uses the more efficient MASS comparison. idx defines the starting index of the query within tsA and m is the length of the query.'''
+    """
+    Returns the distance profile of a query within tsA against the time series tsB using the even more efficient iterative STOMP calculation. Note that the method requires a pre-calculated 'initial' sliding dot product.
 
+    Parameters
+    ----------
+    tsA: Time series containing the query for which to calculate the distance profile.
+    idx: Starting location of the query within tsA
+    m: Length of query.
+    tsB: Time series to compare the query against. Note that, for the time being, only tsB = tsA is allowed
+    dot_first: The 'initial' sliding dot product, or QT(1,1) in Zhu et.al
+    dp: The dot product between tsA and the query starting at index m-1
+    mean: Array containing the mean of every subsequence of length m in tsA (moving window)
+    std: Array containing the mean of every subsequence of length m in tsA (moving window)
+    """
 
     selfJoin = False
     if tsB is None:
