@@ -23,7 +23,7 @@ def naiveDistanceProfile(tsA,idx,m,tsB = None):
     """
 
     selfJoin = False
-    if tsB is None or (tsA == tsB).all():
+    if tsB is None:
         selfJoin = True
         tsB = tsA
 
@@ -57,7 +57,7 @@ def massDistanceProfile(tsA,idx,m,tsB = None):
     """
 
     selfJoin = False
-    if tsB is None or (tsA == tsB).all():
+    if tsB is None:
         selfJoin = True
         tsB = tsA
 
