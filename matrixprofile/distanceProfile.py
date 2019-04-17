@@ -23,7 +23,7 @@ def naiveDistanceProfile(tsA,idx,m,tsB = None):
     """
 
     selfJoin = False
-    if tsB is None:
+    if tsB is None or (tsA == tsB).all():
         selfJoin = True
         tsB = tsA
 
@@ -57,7 +57,7 @@ def massDistanceProfile(tsA,idx,m,tsB = None):
     """
 
     selfJoin = False
-    if tsB is None:
+    if tsB is None or (tsA == tsB).all():
         selfJoin = True
         tsB = tsA
 
@@ -74,7 +74,7 @@ def massDistanceProfile(tsA,idx,m,tsB = None):
 def mass_distance_profile_parallel(indices, tsA=None, tsB=None, m=None):
     """
     Computes distance profiles for the given indices either via self join or similarity search.
-    
+
     Parameters
     ----------
     indices: Array of indices to compute distance profile for.
@@ -83,10 +83,10 @@ def mass_distance_profile_parallel(indices, tsA=None, tsB=None, m=None):
     m: Length of query.
     """
     distance_profiles = []
-    
+
     for index in indices:
         distance_profiles.append(massDistanceProfile(tsA, index, m, tsB=tsB))
-    
+
     return distance_profiles
 
 
@@ -107,7 +107,7 @@ def STOMPDistanceProfile(tsA,idx,m,tsB,dot_first,dp,mean,std):
     """
 
     selfJoin = False
-    if tsB is None:
+    if tsB is None or (tsA == tsB).all():
         selfJoin = True
         tsB = tsA
 
