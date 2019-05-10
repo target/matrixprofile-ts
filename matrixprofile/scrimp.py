@@ -68,7 +68,11 @@ def calc_distance_profile(X, y, n, m, meanx, sigmax):
     dist = m - dist
     dist = 2 * dist
 
-    return np.absolute(np.sqrt(dist))
+    # taking absolute value causes inconsistent results from Matlab
+    # removing for now.
+    # return np.absolute(np.sqrt(dist))
+
+    return np.sqrt(dist)
 
 
 def calc_exclusion_zone(window_size):
@@ -366,8 +370,7 @@ def scrimp_plus_plus(ts, m, step_size=0.25, runtime=None, random_state=None):
     orig_index = np.arange(profile_len)
 
     compute_order = list(range(0, profile_len, step_size))
-    compute_order = [4, 3, 1, 2, 0]
-    # np.random.shuffle(compute_order)
+    #np.random.shuffle(compute_order)
 
     for iteration in range(len(compute_order)):
         idx = compute_order[iteration]
@@ -389,6 +392,9 @@ def scrimp_plus_plus(ts, m, step_size=0.25, runtime=None, random_state=None):
         idx_diff = calc_idx_diff(idx, idx_nn)
         dotproduct = calc_dotproduct_idx(dotproduct, m, matrix_profile, idx,
                                          sigmax, idx_nn, meanx)
+
+        print('dotproduct')
+        print(dotproduct)
 
         endidx = calc_end_idx(profile_len, idx, step_size, idx_diff)
 
@@ -457,3 +463,9 @@ def scrimp_plus_plus(ts, m, step_size=0.25, runtime=None, random_state=None):
                 break
 
     return (matrix_profile, mp_index)
+
+
+ts = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+m = 4
+mp, mpidx = scrimp_plus_plus(ts, m)
+print('hi')
