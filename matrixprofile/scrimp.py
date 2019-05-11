@@ -76,7 +76,7 @@ def calc_exclusion_zone(window_size):
 
 
 def calc_step_size(window_size, step_size):
-    return math.floor(window_size * step_size)
+    return int(math.floor(window_size * step_size))
 
 
 def calc_profile_len(n, window_size):
