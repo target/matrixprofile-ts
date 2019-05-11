@@ -11,13 +11,15 @@ range = getattr(__builtins__, 'xrange', range)
 
 """Tests for `scrimp` package."""
 
+import os
 import pytest
 
 import numpy as np
 
-
+import matrixprofile
 from matrixprofile import scrimp
 
+MODULE_PATH = matrixprofile.__path__[0]
 
 def test_fast_find_nn_pre():
     """Validate the computations for fast find nn pre."""
@@ -594,11 +596,11 @@ def test_scrimp_plus_plus():
 
     np.testing.assert_almost_equal(mpidx, expected_mpidx)
 
-    ts = np.loadtxt('sampledata.txt')
+    ts = np.loadtxt(os.path.join(MODULE_PATH, '..', 'tests', 'sampledata.txt'))
     m = 32
     step_size = 0.25
     mp, mpidx = scrimp.scrimp_plus_plus(ts, m, step_size)
-    expected_mp = np.loadtxt('mp.txt')
+    expected_mp = np.loadtxt(os.path.join(MODULE_PATH, '..', 'tests', 'mp.txt'))
 
     np.testing.assert_almost_equal(mp, expected_mp, decimal=4)
 
