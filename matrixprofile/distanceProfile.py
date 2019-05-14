@@ -106,9 +106,8 @@ def STOMPDistanceProfile(tsA,idx,m,tsB,dot_first,dp,mean,std):
     std: Array containing the mean of every subsequence of length m in tsA (moving window)
     """
 
-    selfJoin = False
-    if tsB is None or (tsA == tsB).all():
-        selfJoin = True
+    selfJoin = is_self_join(tsA, tsB)
+    if selfJoin:
         tsB = tsA
 
     query = tsA[idx:(idx+m)]
