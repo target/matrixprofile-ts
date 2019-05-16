@@ -15,6 +15,8 @@ import multiprocessing
 from functools import partial
 import math
 
+from .scrimp import scrimp_plus_plus
+
 def _self_join_or_not_preprocess(tsA, tsB, m):
     """
     Core method for determining if a self join is occuring and returns appropriate
