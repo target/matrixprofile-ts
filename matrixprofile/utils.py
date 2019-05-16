@@ -219,3 +219,16 @@ def apply_av(mp,av=[1.0]):
         mp_corrected = mp[0]*np.array(av)
 
         return mp_corrected
+
+
+def is_self_join(tsA, tsB):
+    """
+    Helper function to determine if a self join is occurring or not. When tsA 
+    is absolutely equal to tsB, a self join is occurring.
+
+    Parameters
+    ----------
+    tsA: Primary time series.
+    tsB: Subquery time series.
+    """
+    return tsB is None or np.array_equal(tsA, tsB)
