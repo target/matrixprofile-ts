@@ -127,3 +127,24 @@ class TestClass(object):
 
         with pytest.raises(ValueError):
             apply_av(a,av)
+
+
+    def test_self_join_tsb_none(self):
+        tsA = np.array([1, 2, 3])
+        tsB = None
+
+        assert(is_self_join(tsA, tsB) == True)
+
+
+    def test_self_join_tsb_different_size(self):
+        tsA = np.array([1, 2, 3])
+        tsB = np.array([1])
+
+        assert(is_self_join(tsA, tsB) == False)
+
+
+    def test_self_join_tsb_same(self):
+        tsA = np.array([1, 2, 3])
+        tsB = np.array([1, 2, 3])
+
+        assert(is_self_join(tsA, tsB) == True)
