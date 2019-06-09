@@ -1,5 +1,7 @@
 [![PyPI version](https://badge.fury.io/py/matrixprofile-ts.svg)](https://badge.fury.io/py/matrixprofile-ts)
 [![Build Status](https://travis-ci.org/target/matrixprofile-ts.svg)](https://travis-ci.org/target/matrixprofile-ts)
+[![Downloads](https://pepy.tech/badge/matrixprofile-ts)](https://pepy.tech/project/matrixprofile-ts)
+[![Downloads/Week](https://pepy.tech/badge/matrixprofile-ts/week)](https://pepy.tech/project/matrixprofile-ts/week)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 # matrixprofile-ts
 
