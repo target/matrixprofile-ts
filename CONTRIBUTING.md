@@ -20,4 +20,4 @@ Please, raise issues in GitHub to help keep matrixprofile-ts updated!
   3. Give Credit
      * If any submissions or contributions are built upon other work (e.g. research papers, open sourced projects, public code), please cite or attach any information about the original source. People should be credited for the work they've done.
 
-[GitHub Code of Conduct](.github/Code_Of_Conduct.md)
+For further questions, please review the Code of Conduct.
