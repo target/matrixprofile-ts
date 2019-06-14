@@ -1,10 +1,10 @@
-# Contributing to matrixprofile
+# Contributing to matrixprofile-ts
 
 ## Issues
 Please, raise issues in GitHub to help keep matrixprofile-ts updated!
 
-## How to contribute to matrixprofile
-  1. Fork matrixprofile
+## How to contribute to matrixprofile-ts
+  1. Fork matrixprofile-ts
   2. Start a new branch for your feature
     * branch prefixes we use:
       * `feature_{}`: for features
