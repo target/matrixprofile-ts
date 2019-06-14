@@ -1,3 +1,6 @@
+## 0.0.6 (released 6/13/19)
+- Fixed bug by requiring a later version of numpy
+
 ## 0.0.5 (released 6/9/19)
 - SCRIMP++ implementation
 - Algorithm performance benchmarking and use case descriptions
