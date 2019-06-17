@@ -454,9 +454,3 @@ def scrimp_plus_plus(ts, m, step_size=0.25, runtime=None, random_state=None):
                 break
 
     return (matrix_profile, mp_index)
-
-
-if __name__ == '__main__':
-    ts = np.random.uniform(size=2**10)
-    m = 2*7
-    mp, mpidx = scrimp_plus_plus(ts, m)
