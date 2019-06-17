@@ -134,7 +134,7 @@ def calc_dotproduct_idx(dotproduct, m, mp, idx, sigmax, idx_nn, meanx):
 
 def calc_end_idx(profile_len, idx, step_size, idx_diff):
     return np.min([profile_len - 1, idx + step_size - 1, 
-                  profile_len - idx_diff])
+                  profile_len - idx_diff - 1])
 
 
 def calc_dotproduct_end_idx(ts, dp, idx, m, endidx, idx_nn, idx_diff):

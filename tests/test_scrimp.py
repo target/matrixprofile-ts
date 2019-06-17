@@ -557,30 +557,6 @@ def test_calc_curdistance():
 
 
 def test_scrimp_plus_plus():
-    ts = np.array([1, 2, 3, 4, 5, 6, 7, 8])
-    m = 4
-    step_size = 0.25
-    mp, mpidx = scrimp.scrimp_plus_plus(ts, m, step_size)
-
-    expected_mp = np.array([
-        0.4215e-07,
-        0.4215e-07,
-        0.4215e-07,
-        0.4215e-07,
-        0.4215e-07,
-    ])
-
-    expected_mpidx = np.array([
-        2,
-        3,
-        0,
-        0,
-        0,
-    ])
-
-    np.testing.assert_almost_equal(mp, expected_mp)
-    np.testing.assert_almost_equal(mpidx, expected_mpidx)
-
     ts = np.array([0, 0, 1, 0, 0, 0, 1, 0])
     m = 4
     step_size = 0.25
