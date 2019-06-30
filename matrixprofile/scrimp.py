@@ -68,7 +68,7 @@ def calc_distance_profile(X, y, n, m, meanx, sigmax):
     dist = m - dist
     dist = np.real(2 * dist)
 
-    return np.absolute(np.sqrt(dist))
+    return np.sqrt(np.absolute(dist))
 
 
 def calc_exclusion_zone(window_size):
