@@ -28,7 +28,7 @@ def _idealized_arc_curve(n, x):
     return y
 
 
-def fluss(mpi, m = None):
+def fluss(mpi, m=None):
     """
     Returns the corrected arc curve (CAC) for the matrix profile index (MPI).
     The FLUSS algorithm provides Fast Low-cost Unipotent Semantic Segmantation.
@@ -40,20 +40,26 @@ def fluss(mpi, m = None):
     and tail of the CAC.
     """
     n = len(mpi)
-    arc_curve = corrected_arc_curve = nnmark = np.zeros(n)
+    nnmark = np.zeros(n)
 
+    # find the number of additional arcs starting to cross over each index
     for i in range(0, n):
         mpi_val = mpi[i]
-        nnmark[int(min(i, mpi_val))] = nnmark[int(min(i, mpi_val))] + 1
-        nnmark[int(max(i, mpi_val))] = nnmark[int(max(i, mpi_val))] - 1
+        small = int(min(i, mpi_val))
+        large = int(max(i, mpi_val))
+        nnmark[small + 1] = nnmark[small + 1] + 1
+        nnmark[large] = nnmark[large] - 1
 
-    num_arcs = 0
-    for mpi_val in range(0, n):
-        num_arcs += nnmark[mpi_val]
-        arc_curve[mpi_val] = num_arcs
+    # cumulatively sum all crossing arcs at each index
+    cross_count = np.cumsum(nnmark)
 
-    for k in range(0, n):
-        corrected_arc_curve[k] = min(arc_curve[k] / _idealized_arc_curve(n, k), 1)
+    # compute ideal arc curve for all indices
+    idealized = np.apply_along_axis(lambda i: _idealized_arc_curve(n, i), 0, np.arange(0, n))
+    idealized = cross_count / idealized
+
+    # correct the arc curve so that it is between 0 and 1
+    idealized[idealized > 1] = 1
+    corrected_arc_curve = idealized
 
     if m:
         corrected_arc_curve[:m] = 1
