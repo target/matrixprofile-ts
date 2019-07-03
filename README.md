@@ -11,6 +11,13 @@ Read the Target blog post [here](https://tech.target.com/2018/12/11/matrix-profi
 
 Further academic description can be found [here](https://www.cs.ucr.edu/~eamonn/MatrixProfile.html).
 
+The PyPi page for matrixprofile-ts is [here](https://pypi.org/project/matrixprofile-ts/)
+
+## Matrix Profile Foundation
+matrixprofile-ts is part of the Matrix Profile Foundation, an organization dedicated to facilitating community awareness & adoption of the Matrix Profile through educational resources and high-quality code. More information can be found at https://www.matrixprofile.org/.
+
+An interactive Matrix Profile UI can be found at https://www.matrixprofiles.com/.
+
 ## Contents
 - [Installation](#installation)
 - [Quick start](#quick-start)
@@ -78,6 +85,7 @@ All time comparisons were ran on a 4 core 2.8 ghz processor with 16 GB of memory
 ## Matrix Profile in Other Languages
 - R: https://github.com/franzbischoff/tsmp
 - Golang: https://github.com/aouyang1/go-matrixprofile
+- C++: https://github.com/shapelets/khiva
 
 ## Contact
 - Andrew Van Benschoten (avbs89@gmail.com)
