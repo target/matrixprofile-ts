@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 # matrixprofile-ts
 
-matrixprofile-ts is a Python 2 and 3 library for evaluating time series data using the Matrix Profile algorithms developed by the [Keogh](https://www.cs.ucr.edu/~eamonn/MatrixProfile.html) and [Mueen](https://www.cs.unm.edu/~mueen/) research groups at UC-Riverside and the University of New Mexico. Current implementations include MASS, STMP, STAMP, STAMPI, STOMP and SCRIMP++.
+matrixprofile-ts is a Python 2 and 3 library for evaluating time series data using the Matrix Profile algorithms developed by the [Keogh](https://www.cs.ucr.edu/~eamonn/MatrixProfile.html) and [Mueen](https://www.cs.unm.edu/~mueen/) research groups at UC-Riverside and the University of New Mexico. Current implementations include MASS, STMP, STAMP, STAMPI, STOMP, SCRIMP++, and FLUSS.
 
 Read the Target blog post [here](https://tech.target.com/2018/12/11/matrix-profile.html).
 
@@ -107,3 +107,5 @@ All time comparisons were ran on a 4 core 2.8 ghz processor with 16 GB of memory
 3. Matrix Profile V: A Generic Technique to Incorporate Domain Knowledge into Motif Discovery. Hoang Anh Dau and Eamonn Keogh. KDD'17, Halifax, Canada.
 
 4. Matrix Proﬁle XI: SCRIMP++: Time Series Motif Discovery at Interactive Speed. Yan Zhu, Chin-Chia Michael Yeh, Zachary Zimmerman, Kaveh Kamgar and Eamonn Keogh, ICDM 2018.
+
+5. Matrix Profile VIII: Domain Agnostic Online Semantic Segmentation at Superhuman Performance Levels. Shaghayegh Gharghabi, Yifei Ding, Chin-Chia Michael Yeh, Kaveh Kamgar, Liudmila Ulanova, and Eamonn Keogh. ICDM 2017.

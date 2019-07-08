@@ -1,2 +1,2 @@
 name = "matrixprofile"
-__all__ = ['utils','order','distanceProfile','matrixProfile']
+__all__ = ['utils','order','distanceProfile','matrixProfile', 'fluss']
