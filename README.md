@@ -80,7 +80,7 @@ The Matrix Profile has spiked in value, highlighting the (potential) presence of
 
 This section shows the matrix profile algorithms and the time it takes to compute them. It also discusses use cases on when to use one versus another. The timing comparison is based on the synthetic sample data set to show run time speed.
 
-For a more comprehensive runtime comparison, please review the notebook ["docs/examples/Algorithm Comparison.ipynb"](https://github.com/target/matrixprofile-ts/blob/master/docs/examples/Algorithm Comparison.ipynb).
+For a more comprehensive runtime comparison, please review the notebook [docs/examples/Algorithm Comparison.ipynb](https://github.com/target/matrixprofile-ts/blob/master/docs/examples/Algorithm%20Comparison.ipynb).
 
 All time comparisons were ran on a 4 core 2.8 ghz processor with 16 GB of memory. The operating system used was Ubuntu 18.04LTS 64 bit.
 
