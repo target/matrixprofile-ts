@@ -16,7 +16,7 @@ class TestClass(object):
 
     def test_naiveMP_self_mpi(self):
         a = np.array([0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0])
-        mpi_outcome = np.array([4., 5., 6., 7., 0., 1., 2., 3., 0.])
+        mpi_outcome = np.array([0., 1., 2., 3., 0., 1., 2., 3., 0.])
 
         r = naiveMP(a,4)
 
@@ -54,7 +54,7 @@ class TestClass(object):
 
     def test_stmp_self_mpi(self):
         a = np.array([0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0])
-        mpi_outcome = np.array([4., 5., 6., 7., 0., 1., 2., 3., 0.])
+        mpi_outcome = np.array([0., 1., 2., 3., 0., 1., 2., 3., 0.])
 
         r = stmp(a,4)
 
@@ -146,7 +146,7 @@ class TestClass(object):
         r = stamp(a,4, sampling=1.0)
         final = np.round(stampi_update(a,4,r[0],r[1],95),2)
 
-        mpi_outcome = np.array([4.0, 5.0, 6.0, 7.0, 0.0, 1.0, 2.0, 3.0, 3.0])
+        mpi_outcome = np.array([0.0, 5.0, 6.0, 3.0, 0.0, 5.0, 6.0, 3.0, 3.0])
 
         assert(np.allclose(final[1],mpi_outcome))
 
