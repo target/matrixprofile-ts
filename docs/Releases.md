@@ -2,6 +2,7 @@
 - Implementation of FLUSS algorithm for determining the Corrected Arc Curve
 - Implementation of algorithm to extract regimes from the Corrected Arc Curve
 - Fix for handling missing NaN/inf values
+- Ability to read in non-numpy array data types (lists, tuples)
 - Bug fixes for SCRIMP++ implementation
 
 
