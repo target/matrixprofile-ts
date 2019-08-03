@@ -28,7 +28,7 @@ def is_array_like(a):
     -------
     True or false respectively.
     """
-    return isinstance(a, (list, tuple, np.array))
+    return isinstance(a, tuple([list, tuple, np.ndarray]))
 
 def to_np_array(a):
     """
@@ -103,6 +103,9 @@ def _matrixProfile(tsA,m,orderClass,distanceProfileFunction,tsB=None):
     order = orderClass(len(tsA)-m+1)
     mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
 
+    if not is_array_like(tsB):
+        tsB = tsA
+
     tsA = _clean_nan_inf(tsA)
     tsB = _clean_nan_inf(tsB)
 
@@ -140,6 +143,9 @@ def _stamp_parallel(tsA, m, tsB=None, sampling=0.2, n_threads=-1, random_state=N
 
     n = len(tsA)
     mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
+
+    if not is_array_like(tsB):
+        tsB = tsA
 
     tsA = _clean_nan_inf(tsA)
     tsB = _clean_nan_inf(tsB)
@@ -179,6 +185,9 @@ def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sa
     order = orderClass(len(tsA)-m+1, random_state=random_state)
     mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
 
+    if not is_array_like(tsB):
+        tsB = tsA
+
     tsA = _clean_nan_inf(tsA)
     tsB = _clean_nan_inf(tsB)
 
@@ -210,6 +219,9 @@ def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sa
 def _matrixProfile_stomp(tsA,m,orderClass,distanceProfileFunction,tsB=None):
     order = orderClass(len(tsA)-m+1)
     mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
+
+    if not is_array_like(tsB):
+        tsB = tsA
 
     tsA = _clean_nan_inf(tsA)
     tsB = _clean_nan_inf(tsB)
