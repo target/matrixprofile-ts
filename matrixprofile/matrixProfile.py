@@ -17,11 +17,25 @@ import math
 
 from .scrimp import scrimp_plus_plus
 
+def _clean_nan_inf(ts):
+    """
+    Replaces nan and inf values with zeros in a given time series
+
+    Parameters
+    ----------
+    ts: Time series to clean
+    """
+    search = (np.isinf(ts) | np.isnan(ts))
+    ts[search] = 0
+
+    return ts
+
+
 def _self_join_or_not_preprocess(tsA, tsB, m):
     """
     Core method for determining if a self join is occuring and returns appropriate
     profile and index numpy arrays with correct dimensions as all np.nan values.
-    
+
     Parameters
     ----------
     tsA: Time series containing the queries for which to calculate the Matrix Profile.
@@ -31,9 +45,9 @@ def _self_join_or_not_preprocess(tsA, tsB, m):
     n = len(tsA)
     if tsB is not None:
         n = len(tsB)
-    
+
     shape = n - m + 1
-    
+
     return (np.full(shape, np.inf), np.full(shape, np.inf))
 
 def _matrixProfile(tsA,m,orderClass,distanceProfileFunction,tsB=None):
@@ -51,6 +65,9 @@ def _matrixProfile(tsA,m,orderClass,distanceProfileFunction,tsB=None):
 
     order = orderClass(len(tsA)-m+1)
     mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
+
+    tsA = _clean_nan_inf(tsA)
+    tsB = _clean_nan_inf(tsB)
 
     idx=order.next()
     while idx != None:
@@ -71,7 +88,7 @@ def _matrixProfile(tsA,m,orderClass,distanceProfileFunction,tsB=None):
 def _stamp_parallel(tsA, m, tsB=None, sampling=0.2, n_threads=-1, random_state=None):
     """
     Computes distance profiles in parallel using all CPU cores by default.
-    
+
     Parameters
     ----------
     tsA: Time series containing the queries for which to calculate the Matrix Profile.
@@ -83,26 +100,29 @@ def _stamp_parallel(tsA, m, tsB=None, sampling=0.2, n_threads=-1, random_state=N
     """
     if n_threads is -1:
         n_threads = multiprocessing.cpu_count()
-    
+
     n = len(tsA)
     mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
 
+    tsA = _clean_nan_inf(tsA)
+    tsB = _clean_nan_inf(tsB)
+
     # determine sampling size
     sample_size = math.ceil((n - m + 1) * sampling)
-    
+
     # generate indices to sample and split based on n_threads
     if random_state is not None:
         np.random.seed(random_state)
-    
+
     indices = np.arange(n - m + 1)
     indices = np.random.choice(indices, size=sample_size, replace=False)
     indices = np.array_split(indices, n_threads)
-    
+
     # create pool of workers and compute
     with multiprocessing.Pool(processes=n_threads) as pool:
         func = partial(distanceProfile.mass_distance_profile_parallel, tsA=tsA, tsB=tsB, m=m)
         results = pool.map(func, indices)
-    
+
     # The overall matrix profile is the element-wise minimum of each sub-profile, and each element of the overall
     # matrix profile index is the time series position of the corresponding sub-profile.
     for result in results:
@@ -121,6 +141,9 @@ def _stamp_parallel(tsA, m, tsB=None, sampling=0.2, n_threads=-1, random_state=N
 def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sampling=0.2,random_state=None):
     order = orderClass(len(tsA)-m+1, random_state=random_state)
     mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
+
+    tsA = _clean_nan_inf(tsA)
+    tsB = _clean_nan_inf(tsB)
 
     idx=order.next()
 
@@ -150,6 +173,9 @@ def _matrixProfile_sampling(tsA,m,orderClass,distanceProfileFunction,tsB=None,sa
 def _matrixProfile_stomp(tsA,m,orderClass,distanceProfileFunction,tsB=None):
     order = orderClass(len(tsA)-m+1)
     mp, mpIndex = _self_join_or_not_preprocess(tsA, tsB, m)
+
+    tsA = _clean_nan_inf(tsA)
+    tsB = _clean_nan_inf(tsB)
 
     idx=order.next()
 
@@ -253,10 +279,10 @@ def stamp(tsA,m,tsB=None,sampling=0.2, n_threads=None, random_state=None):
     """
     if sampling > 1 or sampling < 0:
         raise ValueError('Sampling value must be a percentage in decimal format from 0 to 1.')
-    
+
     if n_threads is None:
         return _matrixProfile_sampling(tsA,m,order.randomOrder,distanceProfile.massDistanceProfile,tsB,sampling=sampling,random_state=random_state)
-    
+
     return _stamp_parallel(tsA, m, tsB=tsB, sampling=sampling, n_threads=n_threads, random_state=random_state)
 
 def stomp(tsA,m,tsB=None):

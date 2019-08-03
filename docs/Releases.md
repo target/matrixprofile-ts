@@ -1,3 +1,10 @@
+## 0.0.7 (released 8/2/19)
+- Implementation of FLUSS algorithm for determining the Corrected Arc Curve
+- Implementation of algorithm to extract regimes from the Corrected Arc Curve
+- Fix for handling missing NaN/inf values
+- Bug fixes for SCRIMP++ implementation
+
+
 ## 0.0.6 (released 6/13/19)
 - Fixed bug by requiring a later version of numpy
 

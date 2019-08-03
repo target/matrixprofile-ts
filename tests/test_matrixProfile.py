@@ -110,6 +110,16 @@ class TestClass(object):
 
         assert(r[0] == mp_outcome).all()
 
+    def test_stamp_dual_mp_nan_inf(self):
+        a = np.array([0.0,1.0,1.0,0.0,np.nan,1.0,1.0,0.0,0.0,1.0,1.0,0.0])
+        b = np.array([0.0,1.0,1.0,0.0,np.inf,1.0,1.0,0.0,0.0,1.0,1.0,0.0])
+        mp_outcome = np.array([0., 0., 0., 0., 0., 0., 0., 0., 0.])
+
+
+        r = stamp(a,4,b,sampling=1.0)
+
+        assert(r[0] == mp_outcome).all()
+
 
     def test_stamp_dual_mpi(self):
         a = np.array([0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0])
@@ -158,41 +168,41 @@ class TestClass(object):
         r = stomp(a,4)
 
         assert(r[1] == mpi_outcome).all()
-        
+
     def test_stamp_sampling_over_one(self):
         with pytest.raises(ValueError) as excinfo:
             stamp(None,None,sampling=2)
         assert 'Sampling value must be a percentage' in str(excinfo.value)
-        
+
     def test_stamp_sampling_under_zero(self):
         with pytest.raises(ValueError) as excinfo:
             stamp(None,None,sampling=-1)
         assert 'Sampling value must be a percentage' in str(excinfo.value)
-        
+
     def test_stamp_random_state_same_results_self_join(self):
         random_state = 99
         sampling = 0.30
         a = np.array([0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0])
-        
+
         r = stamp(a,4,None,sampling=sampling,random_state=random_state)
         r2 = stamp(a,4,None,sampling=sampling,random_state=random_state)
-        
+
         all_same = (r[0] == r2[0]).all() and (r[1] == r2[1]).all()
         assert(all_same == True)
-        
-        
+
+
     def test_stamp_random_state_same_results_dual_join(self):
         random_state = 99
         sampling = 0.30
         a = np.array([0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0])
         b = np.array([0.0,1.0,1.0,0.2,0.0,1.0,1.0,0.3,0.0,1.0,1.0,0.0])
-        
+
         r = stamp(a,4,b,sampling=sampling,random_state=random_state)
         r2 = stamp(a,4,b,sampling=sampling,random_state=random_state)
-        
+
         all_same = (r[0] == r2[0]).all() and (r[1] == r2[1]).all()
         assert(all_same == True)
-        
+
     def test_stamp_with_parallel_version_random_state_set_self_join(self):
         random_state = 99
         sampling = 0.1
@@ -202,7 +212,7 @@ class TestClass(object):
 
         all_same = (r[0] == r2[0]).all() and (r[1] == r2[1]).all()
         assert(all_same == True)
-        
+
     def test_stamp_with_parallel_version_random_state_set_dual_join(self):
         random_state = 99
         sampling = 0.1
