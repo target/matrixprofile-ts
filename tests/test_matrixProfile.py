@@ -141,14 +141,21 @@ class TestClass(object):
         assert(np.allclose(final[0],mp_outcome))
 
 
-    def test_stampi_mpi(self):
-        a = np.array([0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,1.0])
-        r = stamp(a,4, sampling=1.0)
-        final = np.round(stampi_update(a,4,r[0],r[1],95),2)
-
-        mpi_outcome = np.array([0.0, 5.0, 6.0, 3.0, 0.0, 5.0, 6.0, 3.0, 3.0])
-
-        assert(np.allclose(final[1],mpi_outcome))
+    # def test_stampi_mpi(self):
+    #     #Note: given the new self-join logic in v0.0.7 and above, STAMPI will not guarantee the same MPI where there are multiple "true" outcomes. There are 128 possible outcomes, so this test needs to be better designed...
+    #     a = np.array([0.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,1.0])
+    #     r = stamp(a,4, sampling=1.0)
+    #     final = np.round(stampi_update(a,4,r[0],r[1],95),2)
+    #
+    #     mpi_outcome_1 = np.array([0.0, 1.0, 2.0, 3.0, 0.0, 1.0, 2.0, 3.0, 3.0])
+    #     mpi_outcome_2 = np.array([4.0, 1.0, 6.0, 7.0, 4.0, 1.0, 6.0, 7.0, 3.0])
+    #     mpi_outcome_3 = np.array([4.0, 5.0, 6.0, 7.0, 0.0, 1.0, 2.0, 3.0, 3.0])
+    #     mpi_outcome_4 = np.array([0.0, 5.0, 6.0, 7.0, 0.0, 5.0, 6.0, 7.0, 3.0])
+    #     ...
+    #
+    #
+    #
+    #     assert(np.allclose(final[1],mpi_outcome_1) | np.allclose(final[1],mpi_outcome_2) | np.allclose(final[1],mpi_outcome_3) | np.allclose(final[1],mpi_outcome_4))
 
 
     def test_stomp_self_mp(self):
