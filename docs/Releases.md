@@ -1,3 +1,6 @@
+## 0.0.8 (released 8/3/19)
+- Minor bug fixes (see Issue #70)
+
 ## 0.0.7 (released 8/3/19)
 - Implementation of FLUSS algorithm for determining the Corrected Arc Curve
 - Implementation of algorithm to extract regimes from the Corrected Arc Curve
