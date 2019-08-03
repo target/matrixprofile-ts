@@ -28,7 +28,7 @@ def is_array_like(a):
     -------
     True or false respectively.
     """
-    return isinstance(a, (list, tuple, np.ndarray, np.array))
+    return isinstance(a, (list, tuple, np.array))
 
 def to_np_array(a):
     """
