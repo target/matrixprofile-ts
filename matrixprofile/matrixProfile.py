@@ -17,14 +17,51 @@ import math
 
 from .scrimp import scrimp_plus_plus
 
+def is_array_like(a):
+    """
+    Helper function to determine if a value is array like.
+    Parameters
+    ----------
+    a : obj
+        Object to test.
+    Returns
+    -------
+    True or false respectively.
+    """
+return isinstance(a, (list, tuple, np.ndarray))
+
+def to_np_array(a):
+    """
+    Helper function to convert tuple or list to np.ndarray.
+    Parameters
+    ----------
+    a : Tuple, list or np.ndarray
+        The object to transform.
+    Returns
+    -------
+    The np.ndarray.
+    Raises
+    ------
+    ValueError
+        If a is not a valid type.
+    """
+    if not is_array_like(a):
+        raise ValueError('Unable to convert to np.ndarray!')
+
+return np.array(a)
+
 def _clean_nan_inf(ts):
     """
-    Replaces nan and inf values with zeros in a given time series
+    Converts tuples & lists to Numpy arrays and replaces nan and inf values with zeros
 
     Parameters
     ----------
     ts: Time series to clean
     """
+
+    #Convert time series to a Numpy array
+    ts = to_np_array(ts)
+
     search = (np.isinf(ts) | np.isnan(ts))
     ts[search] = 0
 
