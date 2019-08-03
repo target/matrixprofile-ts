@@ -28,7 +28,7 @@ def is_array_like(a):
     -------
     True or false respectively.
     """
-return isinstance(a, (list, tuple, np.ndarray))
+    return isinstance(a, (list, tuple, np.ndarray))
 
 def to_np_array(a):
     """
@@ -48,7 +48,7 @@ def to_np_array(a):
     if not is_array_like(a):
         raise ValueError('Unable to convert to np.ndarray!')
 
-return np.array(a)
+    return np.array(a)
 
 def _clean_nan_inf(ts):
     """
