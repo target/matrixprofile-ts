@@ -29,10 +29,10 @@ The PyPi page for matrixprofile-ts is [here](https://pypi.org/project/matrixprof
 ## Matrix Profile Foundation
 matrixprofile-ts is part of the Matrix Profile Foundation, an organization dedicated to facilitating community awareness & adoption of the Matrix Profile through educational resources and high-quality code. More information can be found at https://www.matrixprofile.org/.
 
-An interactive Matrix Profile UI can be found at https://www.matrixprofiles.com/.
+An interactive Matrix Profile UI can be found at https://ui.matrixprofile.org/.
 
 ## Questions
-A key goal of the Matrix Profile Foundation is to provide assistance with deploying the Matrix Profile in real-world settings. In addition to e-mailing foundation members, MPF provides a dedicated Discord channel where practitioners can discuss Matrix Profile applications and seek specific assistance. To join the channel, [click here](https://discordapp.com/invite/vA2BtRT). 
+A key goal of the Matrix Profile Foundation is to provide assistance with deploying the Matrix Profile in real-world settings. In addition to e-mailing foundation members, MPF provides a dedicated Discord channel where practitioners can discuss Matrix Profile applications and seek specific assistance. To join the channel, [click here](https://discordapp.com/invite/vA2BtRT).
 
 
 ## Installation
