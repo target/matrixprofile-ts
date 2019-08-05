@@ -7,35 +7,51 @@ from __future__ import unicode_literals
 range = getattr(__builtins__, 'xrange', range)
 # end of py2 compatability boilerplate
 
-import numpy as np
 from . import distanceProfile
+import numpy as np
 
-def motifs(ts, mp, m, k=3, radius=2, n_neighbors=None, ex_zone=None):
+def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
     """
     Computes the top k motifs from a matrix profile
 
     Parameters
     ----------
+    ts: time series to used to calculate mp
     mp: tuple, (matrix profile numpy array, matrix profile indices)
-    m: window size (should match window used to calculate mp)
-    k: the number of motifs to discover
+    max_motifs: the maximum number of motifs to discover
     ex_zone: the number of samples to exclude and set to Inf on either side of a found motifs
         defaults to m/2
 
-    Returns a list of sets of indexes representing the motif starting locations.
+    Returns tuple (motifs, distances)
+    motifs: a list of lists of indexes representing the motif starting locations.
+    distances: list of minimum distances for each motif
     """
+
+    motifs = []
+    distances = []
+    try:
+        mp_current, mp_idx = mp
+    except:
+        raise ValueError("argument mp must be a tuple")
+    mp_current = np.copy(mp_current)
+
+    if len(ts) <= 1 or len(mp_current) <= 1 or max_motifs == 0:
+        return [], []
+
+    m = len(ts) - len(mp_current) + 1
+    if m <= 1:
+        raise ValueError('Matrix profile is longer than time series.')
     if ex_zone is None:
         ex_zone = m/2
 
-    motifs = []
-    mp_current = np.copy(mp[0])
-
-    for j in range(k):
+    for j in range(max_motifs):
         # find minimum distance and index location
         min_idx = mp_current.argmin()
         motif_distance = mp_current[min_idx]
         if motif_distance == np.inf:
-            return motifs
+            return motifs, distances
+        if motif_distance == 0.0:
+            motif_distance += np.finfo(mp_current.dtype).eps
 
         # filter out all indexes that have a distance within r*motif_distance
         motif_set = set()
@@ -49,7 +65,7 @@ def motifs(ts, mp, m, k=3, radius=2, n_neighbors=None, ex_zone=None):
         _applyExclusionZone(prof, initial_motif[0], ex_zone)
         _applyExclusionZone(prof, initial_motif[1], ex_zone)
         # exclude previous motifs
-        for ms, _ in motifs:
+        for ms in motifs:
             for idx in ms:
                 _applyExclusionZone(prof, idx, ex_zone)
 
@@ -68,11 +84,12 @@ def motifs(ts, mp, m, k=3, radius=2, n_neighbors=None, ex_zone=None):
             else:
                 break
 
-        motifs += [(list(sorted(motif_set)), motif_distance)]
+        motifs += [list(sorted(motif_set))]
+        distances += [motif_distance]
         for motif in motif_set:
             _applyExclusionZone(mp_current, motif, ex_zone)
 
-    return motifs
+    return motifs, distances
 
 
 def _applyExclusionZone(prof, idx, zone):
