@@ -56,7 +56,7 @@ class TestClass(object):
         mpi = np.array([4., 5., 6., 7., 0., 1., 2., 3., 0.])
 
         motif, _ = motifs(a, (mp, mpi), n_neighbors=2)
-        motif_outcome = [[0, 4], [7]]
+        motif_outcome = [[0, 4]]
 
         assert(motif == motif_outcome)
 

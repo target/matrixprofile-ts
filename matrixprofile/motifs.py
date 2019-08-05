@@ -87,10 +87,13 @@ def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
             else:
                 break
 
-        motifs += [list(sorted(motif_set))]
-        distances += [motif_distance]
         for motif in motif_set:
             _applyExclusionZone(mp_current, motif, ex_zone)
+
+        if len(motif_set) < 2:
+            continue
+        motifs += [list(sorted(motif_set))]
+        distances += [motif_distance]
 
     return motifs, distances
 
