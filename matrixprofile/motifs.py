@@ -4,11 +4,11 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import numpy as np
+from . import distanceProfile
 range = getattr(__builtins__, 'xrange', range)
 # end of py2 compatability boilerplate
 
-from . import distanceProfile
-import numpy as np
 
 def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
     """
@@ -53,17 +53,20 @@ def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
         if motif_distance == 0.0:
             motif_distance += np.finfo(mp_current.dtype).eps
 
-        # filter out all indexes that have a distance within r*motif_distance
         motif_set = set()
-        initial_motif = [min_idx, int(mp[1][min_idx])]
+        initial_motif = [min_idx]
+        pair_idx = int(mp[1][min_idx])
+        if mp_current[pair_idx] != np.inf:
+            initial_motif += [pair_idx]
+
         motif_set = set(initial_motif)
 
         prof, _ = distanceProfile.massDistanceProfile(ts, initial_motif[0], m)
 
         # kill off any indices around the initial motif pair since they are
         # trivial solutions
-        _applyExclusionZone(prof, initial_motif[0], ex_zone)
-        _applyExclusionZone(prof, initial_motif[1], ex_zone)
+        for idx in initial_motif:
+            _applyExclusionZone(prof, idx, ex_zone)
         # exclude previous motifs
         for ms in motifs:
             for idx in ms:
@@ -76,11 +79,11 @@ def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
         prof_idx_sort = prof.argsort()
 
         for nn_idx in prof_idx_sort:
+            if n_neighbors is not None and len(motif_set) >= n_neighbors:
+                break
             if prof[nn_idx] < motif_distance*radius:
                 motif_set.add(nn_idx)
                 _applyExclusionZone(prof, nn_idx, ex_zone)
-                if len(motif_set) == n_neighbors:
-                    break
             else:
                 break
 

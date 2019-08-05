@@ -49,6 +49,17 @@ class TestClass(object):
 
         assert(motif == motif_outcome)
 
+    def test_motifs_nneighbors(self):
+        a = np.array([0.0, 1.0, 1.0, 0.0, 0.0, 1.0,
+                      1.0, 0.0, 0.0, 1.0, 1.0, 0.0])
+        mp = np.array([0., 0., 0., 0., 0., 0., 0., 0., 0.])
+        mpi = np.array([4., 5., 6., 7., 0., 1., 2., 3., 0.])
+
+        motif, _ = motifs(a, (mp, mpi), n_neighbors=2)
+        motif_outcome = [[0, 4], [7]]
+
+        assert(motif == motif_outcome)
+
     def test_motifs_empty(self):
         res = motifs([], ([], []))
         assert(res == ([], []))
