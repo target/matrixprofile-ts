@@ -4,11 +4,11 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import numpy as np
-from . import distanceProfile
 range = getattr(__builtins__, 'xrange', range)
 # end of py2 compatability boilerplate
 
+import numpy as np
+from . import distanceProfile
 
 def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
     """
