@@ -10,6 +10,7 @@ range = getattr(__builtins__, 'xrange', range)
 from . import distanceProfile
 import numpy as np
 
+
 def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
     """
     Computes the top k motifs from a matrix profile
@@ -42,7 +43,7 @@ def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
     if m <= 1:
         raise ValueError('Matrix profile is longer than time series.')
     if ex_zone is None:
-        ex_zone = m/2
+        ex_zone = m / 2
 
     for j in range(max_motifs):
         # find minimum distance and index location
@@ -83,7 +84,7 @@ def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
                 break
             if prof[nn_idx] == np.inf:
                 continue
-            if prof[nn_idx] < motif_distance*radius:
+            if prof[nn_idx] < motif_distance * radius:
                 motif_set.add(nn_idx)
                 _applyExclusionZone(prof, nn_idx, ex_zone)
             else:
@@ -101,6 +102,6 @@ def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
 
 
 def _applyExclusionZone(prof, idx, zone):
-    start = int(max(0, idx-zone))
+    start = int(max(0, idx - zone))
     end = int(idx + zone + 1)
     prof[start:end] = np.inf
