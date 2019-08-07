@@ -7,8 +7,8 @@ from __future__ import unicode_literals
 range = getattr(__builtins__, 'xrange', range)
 # end of py2 compatability boilerplate
 
-import numpy as np
 from . import distanceProfile
+import numpy as np
 
 def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
     """
@@ -81,6 +81,8 @@ def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
         for nn_idx in prof_idx_sort:
             if n_neighbors is not None and len(motif_set) >= n_neighbors:
                 break
+            if prof[nn_idx] == np.inf:
+                continue
             if prof[nn_idx] < motif_distance*radius:
                 motif_set.add(nn_idx)
                 _applyExclusionZone(prof, nn_idx, ex_zone)
