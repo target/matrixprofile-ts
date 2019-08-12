@@ -214,10 +214,13 @@ def apply_av(mp,av=[1.0]):
 
     if len(mp[0]) != len(av):
         raise ValueError("Annotation Vector must be the same length as the matrix profile")
-
+    elif:
+        mp_max = np.max(mp[0])
+        mp_min = np.min(mp[0])
+        if mp_max > 1 or mp_min < 0:
+            raise ValueError("Annotation Vector must be between 0 and 1")
     else:
-        mp_corrected = mp[0]*np.array(av)
-
+        mp_corrected = mp[0] + (1 - np.array(av))*np.max(mp[0])
         return mp_corrected
 
 
