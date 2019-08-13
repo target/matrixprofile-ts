@@ -114,10 +114,9 @@ class TestClass(object):
 
     def test_apply_av(self):
         a = [np.array([1.0, 2.0, 1.0, 2.0]), np.array([0.0, 0.0, 0.0, 0.0])]
-        av = np.array([2.0, 1.0, 2.0, 1.0])
+        av = np.array([0.0, 1.0, 1.0, 0.0])
 
-        outcome = np.array([2.0, 2.0, 2.0, 2.0])
-
+        outcome = (np.array([3., 2., 1., 4.]), np.array([0., 0., 0., 0.]))
         assert np.allclose(apply_av(a, av), outcome)
 
     def test_apply_av_length_error(self):
