@@ -32,7 +32,7 @@ def motifs(ts, mp, max_motifs=3, radius=2, n_neighbors=None, ex_zone=None):
     distances = []
     try:
         mp_current, mp_idx = mp
-    except:
+    except TypeError:
         raise ValueError("argument mp must be a tuple")
     mp_current = np.copy(mp_current)
 
