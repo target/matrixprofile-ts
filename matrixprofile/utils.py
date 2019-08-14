@@ -213,12 +213,15 @@ def apply_av(mp,av=[1.0]):
     """
 
     if len(mp[0]) != len(av):
-        raise ValueError("Annotation Vector must be the same length as the matrix profile")
-
+        raise ValueError(
+            "Annotation Vector must be the same length as the matrix profile")
     else:
-        mp_corrected = mp[0]*np.array(av)
-
-        return mp_corrected
+        av_max = np.max(av)
+        av_min = np.min(av)
+        if av_max > 1 or av_min < 0:
+            raise ValueError("Annotation Vector must be between 0 and 1")
+        mp_corrected = mp[0] + (1 - np.array(av)) * np.max(mp[0])
+        return (mp_corrected, mp[1])
 
 
 def is_self_join(tsA, tsB):
