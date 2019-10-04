@@ -29,7 +29,7 @@ The PyPi page for matrixprofile-ts is [here](https://pypi.org/project/matrixprof
 ## Matrix Profile Foundation
 matrixprofile-ts is part of the Matrix Profile Foundation, an organization dedicated to facilitating community awareness & adoption of the Matrix Profile through educational resources and high-quality code. More information can be found at https://www.matrixprofile.org/.
 
-An interactive Matrix Profile UI can be found at https://www.matrixprofiles.com/.
+An interactive Matrix Profile UI can be found at https://ui.matrixprofile.org/.
 
 ## Questions
 A key goal of the Matrix Profile Foundation is to provide assistance with deploying the Matrix Profile in real-world settings. In addition to e-mailing foundation members, MPF provides a dedicated Discord channel where practitioners can discuss Matrix Profile applications and seek specific assistance. To join the channel, [click here](https://discordapp.com/invite/sBhDNXT). 
@@ -80,7 +80,7 @@ The Matrix Profile has spiked in value, highlighting the (potential) presence of
 
 This section shows the matrix profile algorithms and the time it takes to compute them. It also discusses use cases on when to use one versus another. The timing comparison is based on the synthetic sample data set to show run time speed.
 
-For a more comprehensive runtime comparison, please review the notebook ["docs/examples/Algorithm Comparison.ipynb"](https://github.com/target/matrixprofile-ts/blob/master/docs/examples/Algorithm Comparison.ipynb).
+For a more comprehensive runtime comparison, please review the notebook [docs/examples/Algorithm Comparison.ipynb](https://github.com/target/matrixprofile-ts/blob/master/docs/examples/Algorithm%20Comparison.ipynb).
 
 All time comparisons were ran on a 4 core 2.8 ghz processor with 16 GB of memory. The operating system used was Ubuntu 18.04LTS 64 bit.
 
@@ -106,6 +106,6 @@ All time comparisons were ran on a 4 core 2.8 ghz processor with 16 GB of memory
 
 3. Matrix Profile V: A Generic Technique to Incorporate Domain Knowledge into Motif Discovery. Hoang Anh Dau and Eamonn Keogh. KDD'17, Halifax, Canada.
 
-4. Matrix Proﬁle XI: SCRIMP++: Time Series Motif Discovery at Interactive Speed. Yan Zhu, Chin-Chia Michael Yeh, Zachary Zimmerman, Kaveh Kamgar and Eamonn Keogh, ICDM 2018.
+4. Matrix Profile XI: SCRIMP++: Time Series Motif Discovery at Interactive Speed. Yan Zhu, Chin-Chia Michael Yeh, Zachary Zimmerman, Kaveh Kamgar and Eamonn Keogh, ICDM 2018.
 
 5. Matrix Profile VIII: Domain Agnostic Online Semantic Segmentation at Superhuman Performance Levels. Shaghayegh Gharghabi, Yifei Ding, Chin-Chia Michael Yeh, Kaveh Kamgar, Liudmila Ulanova, and Eamonn Keogh. ICDM 2017.
