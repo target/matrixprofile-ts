@@ -32,7 +32,7 @@ matrixprofile-ts is part of the Matrix Profile Foundation, an organization dedic
 An interactive Matrix Profile UI can be found at https://www.matrixprofiles.com/.
 
 ## Questions
-A key goal of the Matrix Profile Foundation is to provide assistance with deploying the Matrix Profile in real-world settings. In addition to e-mailing foundation members, MPF provides a dedicated Discord channel where practitioners can discuss Matrix Profile applications and seek specific assistance. To join the channel, [click here](https://discordapp.com/invite/vA2BtRT). 
+A key goal of the Matrix Profile Foundation is to provide assistance with deploying the Matrix Profile in real-world settings. In addition to e-mailing foundation members, MPF provides a dedicated Discord channel where practitioners can discuss Matrix Profile applications and seek specific assistance. To join the channel, [click here](https://discordapp.com/invite/sBhDNXT). 
 
 
 ## Installation
