@@ -16,8 +16,6 @@ The PyPi page for matrixprofile-ts is [here](https://pypi.org/project/matrixprof
 
 
 ## Contents
-- [Matrix Profile Foundation](#matrix-profile-foundation)
-- [Questions](#questions)
 - [Installation](#installation)
 - [Quick start](#quick-start)
 - [Detailed Example](#detailed-example)
@@ -26,13 +24,6 @@ The PyPi page for matrixprofile-ts is [here](https://pypi.org/project/matrixprof
 - [Contact](#contact)
 - [Citations](#citations)
 
-## Matrix Profile Foundation
-matrixprofile-ts is part of the Matrix Profile Foundation, an organization dedicated to facilitating community awareness & adoption of the Matrix Profile through educational resources and high-quality code. More information can be found at https://www.matrixprofile.org/.
-
-An interactive Matrix Profile UI can be found at https://ui.matrixprofile.org/.
-
-## Questions
-A key goal of the Matrix Profile Foundation is to provide assistance with deploying the Matrix Profile in real-world settings. In addition to e-mailing foundation members, MPF provides a dedicated Discord channel where practitioners can discuss Matrix Profile applications and seek specific assistance. To join the channel, [click here](https://discordapp.com/invite/sBhDNXT). 
 
 
 ## Installation
@@ -91,11 +82,13 @@ All time comparisons were ran on a 4 core 2.8 ghz processor with 16 GB of memory
 | SCRIMP++  | 59 ms ± 278 µs per loop (mean ± std. dev. of 7 runs, 10 loops each) | SCRIMP++ merges the concepts of STAMP and STOMP together to provide an anytime algorithm that enables "interactive analysis speed". Essentially, it provides an exact or approximate solution in a very timely manner. Our implementation allows you to specify the max number of seconds you are willing to wait for a solution to obtain an approximate solution. If you are wanting the exact solution, it is able to provide that as well. The original authors of this algorithm suggest that SCRIMP++ can be used in all use cases. |
 
 ## Matrix Profile in Other Languages
-- R: https://github.com/franzbischoff/tsmp
-- Golang: https://github.com/aouyang1/go-matrixprofile
-- C++: https://github.com/shapelets/khiva
+- [R: tsmp](https://github.com/matrix-profile-foundation/tsmp)
+- [Golang: go-matrixprofile](https://github.com/matrix-profile-foundation/go-matrixprofile)
+- [C++: khiva](https://github.com/shapelets/khiva)
+- [Python: matrixprofile](https://github.com/matrix-profile-foundation/matrixprofile)
 
 ## Contact
+- Frankie Cancino (frankiecancino@gmail.com)
 - Andrew Van Benschoten (avbs89@gmail.com)
 - Tyler Marrs (tylerwmarrs@gmail.com)
 
