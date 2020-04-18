@@ -90,7 +90,6 @@ All time comparisons were ran on a 4 core 2.8 ghz processor with 16 GB of memory
 ## Contact
 - Frankie Cancino (frankiecancino@gmail.com)
 - Andrew Van Benschoten (avbs89@gmail.com)
-- Tyler Marrs (tylerwmarrs@gmail.com)
 
 ## Citations
 1. Chin-Chia Michael Yeh, Yan Zhu, Liudmila Ulanova, Nurjahan Begum, Yifei Ding, Hoang Anh Dau, Diego Furtado Silva, Abdullah Mueen, Eamonn Keogh (2016). Matrix Profile I: All Pairs Similarity Joins for Time Series: A Unifying View that Includes Motifs, Discords and Shapelets. IEEE ICDM 2016
